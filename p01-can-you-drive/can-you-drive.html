@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue 3.4 Template</title>
+  <title>Vue 3.4 - Can You Drive?</title>
   <link rel="stylesheet" href="https://unpkg.com/normalize.css/normalize.css">
   <style type="text/css">
     body {
@@ -13,7 +13,7 @@
       font-size: 2em;
     }
   </style>
-  <!-- <script src="https://unpkg.com/vue@3.4.0"></script> -->
+  <script src="https://unpkg.com/vue@3.4.0"></script>
 </head>
 
 <body>
@@ -23,14 +23,24 @@
     </div>
   </div>
   <script>
-    // const { createApp, ref } = Vue;
-    // const App = {
-    //   setup() {
+    const { createApp, ref } = Vue;
+    const App = {
+      setup() {
         
-    //   },
-    // };
+        // one way to provide a message variable:
+        // return {message: "hi"}
 
-    // createApp(App).mount('#app');
+        // another way to return the message variable
+        // const message = ref("hello");
+        // return {message: message}
+
+        // using a shorthand:
+        const message = ref("hello");
+        return { message }
+      },
+    };
+
+    createApp(App).mount('#app');
   </script>
 </body>
 
