@@ -79,7 +79,12 @@ The entire app will be typed from memory or imagination, including the script ar
   <body>
     <div id="App">
       <div>{{textPrompt}}</div>
-      <input type="text" v-model="answer" placeholder="Enter answers here" />
+      <input
+        type="text"
+        v-model="answer"
+        placeholder="Enter answers here"
+        @keyup.enter="checkAnswer"
+      />
     </div>
     <script>
       // Vue script goes here:
@@ -106,11 +111,10 @@ The entire app will be typed from memory or imagination, including the script ar
 
           // Initialize the text prompt to display the first question of the list
           let currentQuestion = questions.shift();
-          let textPrompt = ref(currentQuestion['question']);
+          let textPrompt = ref(currentQuestion["question"]);
 
           let answer = ref(null);
           let score = ref(0);
-
 
           // this setTimeout runs once and then stops
           // I asked github copilot how to make it repeat itself
@@ -125,7 +129,26 @@ The entire app will be typed from memory or imagination, including the script ar
             // console.log(answer.value);
           }, 1000);
 
-          return { textPrompt, answer };
+          const checkAnswer = () => {
+            const correctAnswer =
+              answer.value === currentQuestion.answer ? true : false;
+            console.log(`checked answer, and it was: ${correctAnswer}`);
+
+            if (correctAnswer) {
+              score.value += 5;
+            }
+
+            // clear the answer text box
+            answer.value = "";
+
+            // get the next question until they run out, then show final score
+            currentQuestion = questions.shift();
+            textPrompt.value = currentQuestion
+              ? currentQuestion.question
+              : `Your Score ${score.value}`;
+          };
+
+          return { textPrompt, answer, checkAnswer };
         },
       };
 
@@ -178,14 +201,15 @@ The entire app will be typed from memory or imagination, including the script ar
     This has solved it, issue 1 resolved
 
 
-    Issue 1.b:
+    Issue 1.b (solved inadvertently):
 
     However, there is still the Vue warn:  'Failed to resolve directive: mode' and it seems to be from the line using createApp(App).mount("#App"), even though the ref values are rendering properly
 
+    Note: this warning has stopped appearing by itself by the time I was working on Issue 2 but I don't yet know why it appeared or disappeared.
 
 
 
-    Issue 2:
+    Issue 2 (solved):
 
     - a means of detecting an enter key being pressed to save, evaluate the answer and move to the next question
     
@@ -198,16 +222,69 @@ The entire app will be typed from memory or imagination, including the script ar
 
       now I need a way to press enter, detect that event, and compare answer to the current question['answer']
 
+      I could get the element and add an event listener,
 
+      I could use something like @OnChanged in the element tag itself perhaps,
 
-    Issue 3 (solved):
+      I want to see if there is a 'Vue way' to do it so for that I'm going to prompt github copilot to check that
 
-    I am trying to make the input field show the text of the answer using an initial string "ok" 
+      Copilot explained that I could add '@keyup.enter=checkAnswer()' in the input field, 
+      
+      and then implement a function that evaluates answers by making that function within setup(){}
+
+        I implemented this, but it didn't work at first,
+
+        then I reviewed the copilot suggestion and realized that checkAnswer delegate had to be returned 
+        
+        out of setup() for it to be usable in the @keyup event.
+
+        Now I have an event by which I can increment the questions and evaluate and tally scores
+
     
-    but it shows an empty input box or the placeholder text instead
+    
+      Issue 3 (solved):
 
-    I was able to confirm in the console that answer.value is "ok", but the input field it is v-model's to is blank
+      I am trying to make the input field show the text of the answer using an initial string "ok" 
+  
+      but it shows an empty input box or the placeholder text instead
 
-    I fixed it by realizing I had a typo 'v-mode' and changed it to 'v-model' and it works now
+      I was able to confirm in the console that answer.value is "ok", but the input field it is v-model's to is blank
+
+      I fixed it by realizing I had a typo 'v-mode' and changed it to 'v-model' and it works now
+
+
+
+      Issue 4 (solved):
+
+      I have it so that if I press enter 3 times without entering anything, it shows "Your Score: 3" as expected
+
+      And I also have it so that if I enter a right or wrong anwswer, the console logs 'true' and 'false' for
+
+      whether the input answer matches the expected answer
+
+      however when I go to write correct answers into the input, the final score appears as undefined
+
+      if I enter no answers, I get a proper numeric score, but if I enter actual answers, it is undefined.
+
+
+      it was because of this:
+
+        if (correctAnswer) {
+          score += 5;
+        }
+        
+        needed to be:
+        
+        if (correctAnswer) {
+          score.value += 5;
+        }
+        
+
+
+      At this point, all issues are solved and the entire functionality explained and demonstrated appears to be in place.
+
+      Making final commit and then checking against the flowchart and solutions the teacher shows
+
+      I will be especially interested in seeing how he got the enter key press implemented vs what I had
 
 -->
