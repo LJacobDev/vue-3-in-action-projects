@@ -79,7 +79,7 @@ The entire app will be typed from memory or imagination, including the script ar
   <body>
     <div id="App">
       <div>{{textPrompt}}</div>
-      <input type="text" v-mode="answer" />
+      <input type="text" v-model="answer" placeholder="Enter answers here" />
     </div>
     <script>
       // Vue script goes here:
@@ -89,10 +89,6 @@ The entire app will be typed from memory or imagination, including the script ar
       const App = {
         // I had to go check the other file to confirm whether it was 'Setup' or 'setup'
         setup() {
-          let textPrompt = ref("Next Question");
-          let answer = ref("ok");
-          let score = ref(0);
-
           const questions = [
             {
               question: "Next question\nHow much is 2+2?",
@@ -108,6 +104,14 @@ The entire app will be typed from memory or imagination, including the script ar
             },
           ];
 
+          // Initialize the text prompt to display the first question of the list
+          let currentQuestion = ref(questions.shift());
+          let textPrompt = ref(currentQuestion['question']);
+
+          let answer = ref(null);
+          let score = ref(0);
+
+
           // this setTimeout runs once and then stops
           // I asked github copilot how to make it repeat itself
           // copilot explained that setInterval was what to use here instead.
@@ -116,6 +120,9 @@ The entire app will be typed from memory or imagination, including the script ar
             //this was to confirm that the score was decreasing each second
             // textPrompt.value = score
             // console.log(score.value);
+
+            //this was to check answer's value in the console when it wasn't appearing in the input text
+            // console.log(answer.value);
           }, 1000);
 
           return { textPrompt, answer };
@@ -180,13 +187,27 @@ The entire app will be typed from memory or imagination, including the script ar
 
     Issue 2:
 
-    - a means of detecting an enter key being pressed to save, evaluate the answer and move to the next question has not been shown in the course, so some knowledge of how to do that either with regular javascript or with Vue methodology needs to be looked up in documentation / github copilot etc.
+    - a means of detecting an enter key being pressed to save, evaluate the answer and move to the next question
+    
+    has not been shown in the course, so some knowledge of how to do that either with regular javascript 
+    
+    or with Vue methodology needs to be looked up in documentation / github copilot etc.
+
+
+      I have gotten to the point of the question text being asked, and the input field being v-model bound to answer
+
+      now I need a way to press enter, detect that event, and compare answer to the current question['answer']
 
 
 
-    Issue 3:
+    Issue 3 (solved):
 
-    I am trying to make the input field show the text of the answer using an initial string "ok" but it shows an empty input box or the placeholder text instead
+    I am trying to make the input field show the text of the answer using an initial string "ok" 
+    
+    but it shows an empty input box or the placeholder text instead
 
+    I was able to confirm in the console that answer.value is "ok", but the input field it is v-model's to is blank
+
+    I fixed it by realizing I had a typo 'v-mode' and changed it to 'v-model' and it works now
 
 -->
