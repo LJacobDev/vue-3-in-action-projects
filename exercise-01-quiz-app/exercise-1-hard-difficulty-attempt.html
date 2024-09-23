@@ -105,7 +105,7 @@ The entire app will be typed from memory or imagination, including the script ar
           ];
 
           // Initialize the text prompt to display the first question of the list
-          let currentQuestion = ref(questions.shift());
+          let currentQuestion = questions.shift();
           let textPrompt = ref(currentQuestion['question']);
 
           let answer = ref(null);
