@@ -39,7 +39,7 @@ over top of an input field
 So it doesn't say "right, wrong" while taking the quiz but just shows a score at the end without indicating which questions were answered right
 
 
-My plan will be to store the questions as objects in an array, with 'question' text and 'answer' text, where they can be pulled from the first element of the list and asked
+My plan will be to store the questions as objects in an array of objects, with 'question' text and 'answer' text, where they can be shifted from the first element of the list and asked
 
 a way to detect enter key press needs to happen so an event can cause the input answer to be evaluated against the question object's answer key, and a score variable tallied
 
@@ -114,7 +114,7 @@ The entire app will be typed from memory or imagination, including the script ar
           let textPrompt = ref(currentQuestion["question"]);
 
           let answer = ref(null);
-          let score = ref(0);
+          let score = ref(0); //I notice that score doesn't need to be a ref value but it doesn't harm anything that it is
 
           // this setTimeout runs once and then stops
           // I asked github copilot how to make it repeat itself
@@ -153,7 +153,7 @@ The entire app will be typed from memory or imagination, including the script ar
       };
 
       // I had to take a look at this line of code because I only got something close to:
-      // "createApp.(App).mount("#App"); and I know I'm missing a method name that I need here"
+      // "createApp.[methodname?](App).mount("#App"); and I know I'm missing a method name that I need here"
       // correction: there isn't a missing method, it's that createApp is itself a function and not an object handle
       createApp(App).mount("#App");
     </script>
@@ -196,7 +196,7 @@ The entire app will be typed from memory or imagination, including the script ar
 
     This did not solve it, so I am going to check the other file to see what might be different.
 
-    The very first thing that I checked was that my function was named Setup, and the one in the other file was setup, so I'm changing that with the expectation that this is an obvious looking explanation for those warnings
+    The very first thing that I checked was that my function was named 'Setup', and the one in the other file was 'setup', so I'm changing that with the expectation that this is an obvious looking explanation for those warnings
 
     This has solved it, issue 1 resolved
 
@@ -220,15 +220,15 @@ The entire app will be typed from memory or imagination, including the script ar
 
       I have gotten to the point of the question text being asked, and the input field being v-model bound to answer
 
-      now I need a way to press enter, detect that event, and compare answer to the current question['answer']
+      now I need a way to press enter, detect that event, and compare answer to the currentQuestion['answer']
 
-      I could get the element and add an event listener,
+      I could get the input element and add an event listener,
 
       I could use something like @OnChanged in the element tag itself perhaps,
 
-      I want to see if there is a 'Vue way' to do it so for that I'm going to prompt github copilot to check that
+      I want to see if there is a 'Vue way' to do it, so for that I'm going to prompt github copilot to check that
 
-      Copilot explained that I could add '@keyup.enter=checkAnswer()' in the input field, 
+      Copilot explained that I could add something like '@keyup.enter=checkAnswer()' in the input field, 
       
       and then implement a function that evaluates answers by making that function within setup(){}
 
@@ -236,7 +236,9 @@ The entire app will be typed from memory or imagination, including the script ar
 
         then I reviewed the copilot suggestion and realized that checkAnswer delegate had to be returned 
         
-        out of setup() for it to be usable in the @keyup event.
+        out of setup() for it to be usable in the @keyup event, 
+        
+        and I also noticed myself that I needed write it as checkAnswer and not checkAnswer() in the @keyup event.
 
         Now I have an event by which I can increment the questions and evaluate and tally scores
 
