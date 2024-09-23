@@ -21,10 +21,12 @@
 
   <body>
     <div id="app">
-      <div>{{message}}</div>
+      <div>Message: {{message}}</div>
+      <div>Age: {{age}}</div>
+      <div>Can You Drive?: {{canDrive}}</div>
     </div>
     <script>
-      const { createApp, ref } = Vue;
+      const { createApp, ref, computed } = Vue;
       const App = {
         setup() {
           // one way to provide a message variable, but this is static, non-reactive data:
@@ -38,6 +40,18 @@
           // using a shorthand:
           let message = ref("hello");
 
+          let age = ref(null);
+
+          // a computed value is one that is readjusted any time a variable it relies on is changed
+          let canDrive = computed( () => {
+            console.log('Computed age!');
+            return age.value >= 18 ? "Yes" : "No";
+
+            //if you were to want to refer to canDrive in the javascript area,
+            //you would refer to it as canDrive.value, like how a ref value works
+            
+          }
+          )
           // demonstrate that the data changing can react in the UI
           setTimeout(() => {
             console.log("changed message!");
@@ -45,9 +59,11 @@
             // message = "hi"; 
             // You are supposed to change message.value to see it react in UI
             message.value = "hi";
+
+            age.value = 18;
           }, 2000);
 
-          return { message };
+          return { message, age, canDrive };
         },
       };
 
