@@ -1,0 +1,192 @@
+<!-- 
+
+Quiz App Exercise
+
+The teacher suggested doing this exercise in one of several varying levels of challenge/difficulty.
+
+The way I wanted to do it was to just see the demonstration of the quiz app functions, then make it myself without any starter code and without seeing the logic flowchart yet
+
+Then after doing this, I want to see what the logic flowchart shows to see what might have been missed or is of interest to notice
+
+Information About Quiz App Based On Demonstration of it:
+
+Text on top,
+Input field (for answers) below text
+
+
+your goal is to answer the questions as quickly as possible, so that implies that there might be an ascending timer that is used to impact the score by perhaps subtracting the seconds taken from the score points
+
+
+The question texts say:
+
+Next question
+How much is 2+2
+
+Next question
+How much is 3*5+1
+
+Next question
+What is the result from 3/1
+
+you type an answer into the input field and pressing enter will clear the input field and change the question text to the next one
+
+Finally It has a text on top:
+
+"Your Score: 3"
+over top of an input field
+
+
+So it doesn't say "right, wrong" while taking the quiz but just shows a score at the end without indicating which questions were answered right
+
+
+My plan will be to store the questions as objects in an array, with 'question' text and 'answer' text, where they can be pulled from the first element of the list and asked
+
+a way to detect enter key press needs to happen so an event can cause the input answer to be evaluated against the question object's answer key, and a score variable tallied
+
+there is also a repeating settimeout that runs for 1000 milliseconds and reduces score by 1 each timeout
+
+
+
+The entire app will be typed from memory or imagination, including the script area that launches the Vue app, except for:
+
+    - the initial html ! boilerplate shortcut
+    - the urls to the unpkg for normalize.css and for Vue
+    - any places where I got stuck and had to refer to the can-you-drive.html for a hint - and lines where that has occurred will be marked with comments saying so
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 1 - Quiz App - Vue 3.4</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/normalize.css/normalize.css"
+    />
+    <style>
+      /* here there was a style for .body that I might skip or else go check what it was*/
+      /* I just put in something I thought up that was close to what I think it was like on the other file */
+      body {
+        font-size: 2rem;
+        font-family: monospace;
+        font-weight: 1000;
+      }
+    </style>
+    <script src="https://unpkg.com/vue@3.4.0"></script>
+  </head>
+  <body>
+    <div id="App">
+      <div>{{textPrompt}}</div>
+      <input type="text" v-mode="answer" />
+    </div>
+    <script>
+      // Vue script goes here:
+
+      const { createApp, ref, computed } = Vue;
+
+      const App = {
+        // I had to go check the other file to confirm whether it was 'Setup' or 'setup'
+        setup() {
+          let textPrompt = ref("Next Question");
+          let answer = ref("ok");
+          let score = ref(0);
+
+          const questions = [
+            {
+              question: "Next question\nHow much is 2+2?",
+              answer: "4",
+            },
+            {
+              question: "Next question\nHow much ist 3*5+1?",
+              answer: "16",
+            },
+            {
+              question: "Next question\nWhat is the result form 3/1?",
+              answer: "3",
+            },
+          ];
+
+          // this setTimeout runs once and then stops
+          // I asked github copilot how to make it repeat itself
+          // copilot explained that setInterval was what to use here instead.
+          setInterval(() => {
+            score.value--;
+            //this was to confirm that the score was decreasing each second
+            // textPrompt.value = score
+            // console.log(score.value);
+          }, 1000);
+
+          return { textPrompt, answer };
+        },
+      };
+
+      // I had to take a look at this line of code because I only got something close to:
+      // "createApp.(App).mount("#App"); and I know I'm missing a method name that I need here"
+      // correction: there isn't a missing method, it's that createApp is itself a function and not an object handle
+      createApp(App).mount("#App");
+    </script>
+  </body>
+</html>
+
+<!--
+    - Issues encountered while making this -
+
+
+    Issue 1 (solved but 1.b now exists):
+
+  - I have set up a beginning state like this:
+
+  <body>
+    <div id="App">
+      <div>{{textPrompt}}</div>
+      <input type="text" v-mode="answer" placeholder="Enter answers here" />
+    </div>
+  </body>
+
+  <script>
+    const { createApp, ref, computed } = Vue;
+
+    const App = {
+        Setup() {
+            let textPrompt = ref("Next Question");
+            let answer = ref("ok");
+
+            return { textPrompt, answer }
+        }
+    }
+
+    createApp(App).mount("#App");
+  </script>
+
+    But I am given warnings that 'textPrompt' and 'answer' are never defined, along with an issue saying 'failed to resolve directive:mode'
+
+    I think it might be because I put the script tag outside of the body as my first guess, so I'll move that and if that doesn't fix it I'll check the other file to see what might be wrong with this.
+
+    This did not solve it, so I am going to check the other file to see what might be different.
+
+    The very first thing that I checked was that my function was named Setup, and the one in the other file was setup, so I'm changing that with the expectation that this is an obvious looking explanation for those warnings
+
+    This has solved it, issue 1 resolved
+
+
+    Issue 1.b:
+
+    However, there is still the Vue warn:  'Failed to resolve directive: mode' and it seems to be from the line using createApp(App).mount("#App"), even though the ref values are rendering properly
+
+
+
+
+    Issue 2:
+
+    - a means of detecting an enter key being pressed to save, evaluate the answer and move to the next question has not been shown in the course, so some knowledge of how to do that either with regular javascript or with Vue methodology needs to be looked up in documentation / github copilot etc.
+
+
+
+    Issue 3:
+
+    I am trying to make the input field show the text of the answer using an initial string "ok" but it shows an empty input box or the placeholder text instead
+
+
+-->
