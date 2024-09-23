@@ -1,73 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vue 3.4 - Can You Drive?</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/normalize.css/normalize.css"
-    />
-    <style type="text/css">
-      body {
-        font-family: monospace;
-        padding: 20px;
-        font-size: 2em;
-      }
-    </style>
-    <!-- This imports Vue from a CDN as an alternative to locally installing it with NPM -->
-    <script src="https://unpkg.com/vue@3.4.0"></script>
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Vue 3.4 - Can You Drive?</title>
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/normalize.css/normalize.css"
+        />
+        <style type="text/css">
+            body {
+                font-family: monospace;
+                padding: 20px;
+                font-size: 2em;
+            }
 
-  <body>
-    <div id="app">
-      <div>Message: {{message}}</div>
-      <div>Age: {{age}}</div>
-      <div>Can You Drive?: {{canDrive}}</div>
-    </div>
-    <script>
-      const { createApp, ref, computed } = Vue;
-      const App = {
-        setup() {
-          // one way to provide a message variable, but this is static, non-reactive data:
-          // return {message: "hi"}
+            .can {
+                color: #4f4;
+            }
 
-          // another way to provide a message variable, where it uses ref() which makes it reactive,
-          // in that it will automatically update in the UI any time the data changes:
-          // const message = ref("hello");
-          // return {message: message}
+            .cant {
+                color: #f44;
+            }
+        </style>
+        <!-- This imports Vue from a CDN as an alternative to locally installing it with NPM -->
+        <script src="https://unpkg.com/vue@3.4.0"></script>
+    </head>
 
-          // using a shorthand:
-          let message = ref("hello");
+    <body>
+        <div id="app">
+            <div>Message: {{message}}</div>
+            <div>Age: {{age}}</div>
+            <div>
+                Can You Drive?:
+                <span
+                    :class="{can: canDrive === 'Yes', cant: canDrive === 'No'}"
+                    >{{canDrive}}</span
+                >
+            </div>
+        </div>
+        <script>
+            const { createApp, ref, computed } = Vue;
+            const App = {
+                setup() {
+                    // one way to provide a message variable, but this is static, non-reactive data:
+                    // return {message: "hi"}
 
-          let age = ref(null);
+                    // another way to provide a message variable, where it uses ref() which makes it reactive,
+                    // in that it will automatically update in the UI any time the data changes:
+                    // const message = ref("hello");
+                    // return {message: message}
 
-          // a computed value is one that is readjusted any time a variable it relies on is changed
-          let canDrive = computed( () => {
-            console.log('Computed age!');
-            return age.value >= 18 ? "Yes" : "No";
+                    // using a shorthand:
+                    let message = ref("hello");
 
-            //if you were to want to refer to canDrive in the javascript area,
-            //you would refer to it as canDrive.value, like how a ref value works
-            
-          }
-          )
-          // demonstrate that the data changing can react in the UI
-          setTimeout(() => {
-            console.log("changed message!");
-            // you don't directly reassign the message itself or the UI won't update.
-            // message = "hi"; 
-            // You are supposed to change message.value to see it react in UI
-            message.value = "hi";
+                    let age = ref(null);
 
-            age.value = 18;
-          }, 2000);
+                    // a computed property is one that is readjusted any time a variable it relies on is changed
+                    let canDrive = computed(() => {
+                        //this will log two compute moments - one where age is null, and another when setTimeout changes it
+                        //and it will recompute any time age changes such as by a user input
+                        console.log("Computed age!");
+                        return age.value >= 18 ? "Yes" : "No";
 
-          return { message, age, canDrive };
-        },
-      };
+                        //if you were to want to refer to canDrive in the javascript area,
+                        //you would refer to it as canDrive.value, like how a ref value works
+                    });
+                    // demonstrate that the data changing can react in the UI
+                    setTimeout(() => {
+                        console.log("changed message!");
+                        // you don't directly reassign the message itself or the UI won't update.
+                        // message = "hi";
+                        // You are supposed to change message.value to see it react in UI
+                        message.value = "hi";
 
-      createApp(App).mount("#app");
-    </script>
-  </body>
+                        age.value = 18;
+                    }, 2000);
+
+                    return { message, age, canDrive };
+                },
+            };
+
+            createApp(App).mount("#app");
+        </script>
+    </body>
 </html>
