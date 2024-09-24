@@ -295,14 +295,20 @@ The entire app will be typed from memory or imagination, including the script ar
       Differences in the teacher's solution that are noteworthy:
 
 
-        ... I notice that in mine, score didn't need to be a ref because I used score.value directly in an interpolated string and not in the usual {{vueBinding}} way, so my score decrementing setInterval was still running and lowering the score at the end of the quiz, not intentionally, while the score.value that was printed at the time was correct and holds fixed in the ui as intended.
+        ... I notice that in mine, score didn't need to be a ref because I used score.value directly in an interpolated
+        string and not in the usual {{vueBinding}} way, so my score decrementing setInterval was still running and
+        lowering the score at the end of the quiz, not intentionally, while the score.value that was printed at the
+        time was correct and holds fixed in the ui as intended.
 
-        What I could have done differently was make {{score}} appear in the UI and then make sure to stop the setInterval from running any further
+        What I could have done differently was make {{score}} appear in the UI and then make sure to stop the
+        setInterval from running any further
 
 
-        I also see that yes the teacher does use a const i = setIntercal and then a clearInterval(i) from within the setInterval to control this timer functionality
+        I also see that yes the teacher does use a const i = setInterval and then a clearInterval(i) from within the
+        setInterval to control this timer functionality
 
-        My code flow is essentially the same as what he shows in his logic flowchart outside of the fact that the clearInterval() happens in his and not in mine
+        My code flow is essentially the same as what he shows in his logic flowchart outside of the fact that the
+        clearInterval() happens in his and not in mine
 
 
         REGARDING PRESSING ENTER TO COLLECT AND EVALUATE ANSWER:
@@ -316,17 +322,22 @@ The entire app will be typed from memory or imagination, including the script ar
         Other noteworthy differences:
 
 
-        he used an array of just questions, and an array of just answers, and seemed to use incrementing an indexer to access them rather than my array and shifting objects out of it with question and answer properties
+        he used an array of just questions, and an array of just answers, and seemed to use 
+        incrementing an indexer to access them rather than my array and shifting objects out 
+        of it with question and answer properties
 
 
-        He indicated that his 'current' question value needed to be reactive but mine was not.  I don't yet see why he needs his to be until I see his solution implementation
+        He indicated that his 'current' question value needed to be reactive but mine was not.  
+        I don't yet see why he needs his to be until I see his solution implementation.
 
 
-        Major difference:  He uses computed() properties to get the question to ask, as well as to check whether an answer is right or now, and an 'areWeDone' value, and I did not use computed() anywhere in my script.
+        Major difference:  He uses computed() properties to get the question to ask, as well as 
+        to check whether an answer is right or now, and an 'areWeDone' value, and I did not use 
+        computed() anywhere in my script.
 
 
 
-        
+
         What I want to see as he shows his solution walkthrough:
 
           How did he use computed values in his example, since I didn't use them in mine?
