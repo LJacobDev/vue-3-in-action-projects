@@ -72,8 +72,10 @@
   </head>
   <body>
     <div id="App">
-      <form>
-        <input placeholder="Enter image URL" />
+
+      <!-- Adding v-on:submit.prevent without a callback is able to make the submit button not reload the page -->
+      <form @submit.prevent="addPhoto">
+        <input v-model="imageText" placeholder="Enter image URL" />
         <button type="submit">Add Photo</button>
       </form>
 
@@ -87,7 +89,7 @@
              <button class="favourite-button">
                 <!-- &#9733 generates a star emoji -->
                 &#9733
-                <!-- using ALT code, ALT + 9733 does not generate a star but something else: ♣ -->
+                <!-- using ALT code to directly show emoji in text editor, ALT + 9733 does not generate a star but something else -->
              </button>
         </div>
       </div>
@@ -97,11 +99,17 @@
 
       const App = {
         setup() {
-          const addPhoto = () => {};
+
+          // a ref value for the image text isn't absolutely necessary for this
+          let imageText = ref(null);
+
+          const addPhoto = () => {
+            console.log("Photo added");
+          };
 
           const toggleFavourite = () => {};
 
-          return { addPhoto, toggleFavourite };
+          return { addPhoto, toggleFavourite, imageText };
         },
       };
 
