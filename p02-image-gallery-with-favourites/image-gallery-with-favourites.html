@@ -19,60 +19,57 @@
 
     <!-- note: adding 'type="text/css" is implied if not written so it is not necessary to add' -->
     <style type="text/css">
-        body {
-            font-family: monospace;
-            padding: 20px;
-            font-size: 16px;
-        }
+      body {
+        font-family: monospace;
+        padding: 20px;
+        font-size: 16px;
+      }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            /* grid-gap: 10px; - this is deprecated*/
-            gap: 10px;
-        }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* grid-gap: 10px; - this is deprecated*/
+        gap: 10px;
+      }
 
-        .photo {
-            position: relative;
-            border: 1px solid #ccc;
-        }
+      .photo {
+        position: relative;
+        border: 1px solid #ccc;
+      }
 
-        .photo img {
-            width: 100%;
-            display: block;
-        }
+      .photo img {
+        width: 100%;
+        display: block;
+      }
 
-        .favourite-button {
-            background: none;
-            border: none;
-            color: #ccc;
-            font-size: 24px;
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            cursor: pointer;
-        }
+      .favourite-button {
+        background: none;
+        border: none;
+        color: #ccc;
+        font-size: 24px;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
 
-        .favourite-button.active {
-            color: gold;
-        }
+      .favourite-button.active {
+        color: gold;
+      }
 
-        .no-photos {
-            text-align: center;
-            color: #999;
-        }
+      .no-photos {
+        text-align: center;
+        color: #999;
+      }
 
-        form {
-            margin-bottom: 20px;
-        }
-
-
+      form {
+        margin-bottom: 20px;
+      }
     </style>
     <script src="https://www.unpkg.com/vue@3.4.0"></script>
   </head>
   <body>
     <div id="App">
-
       <!-- Adding v-on:submit.prevent without a callback is able to make the submit button not reload the page -->
       <form @submit.prevent="addPhoto">
         <input v-model="photoURL" placeholder="Enter image URL" />
@@ -85,15 +82,15 @@
       </p>
       <div class="gallery" v-else>
         <!-- list rendering will go here -->
-        <div v-for="photo in photos" class="photo">
-            <!-- image goes here -->
-             <!-- {{photo.url}} -->
-             <img :src="photo.url" alt="">
-             <button class="favourite-button">
-                <!-- &#9733 generates a star emoji -->
-                &#9733
-                <!-- using ALT code to directly show emoji in text editor, ALT + 9733 does not generate a star but something else -->
-             </button>
+        <div v-for="photo in photos" :key="photo.id" class="photo">
+          <!-- image goes here -->
+          <!-- {{photo.url}} -->
+          <img :src="photo.url" alt="" />
+          <button class="favourite-button">
+            <!-- &#9733 generates a star emoji -->
+            &#9733
+            <!-- using ALT code to directly show emoji in text editor, ALT + 9733 does not generate a star but something else -->
+          </button>
         </div>
       </div>
     </div>
@@ -102,34 +99,32 @@
 
       const App = {
         setup() {
-
           // a ref value for the image text isn't absolutely necessary for this
-          let photoURL = ref('');
+          let photoURL = ref("");
 
           const photos = ref([]);
 
           const addPhoto = () => {
-
-            if (photoURL.value === '') return;
+            if (photoURL.value === "") return;
 
             console.log("Photo added");
 
             const newPhoto = {
-                id: photos.value.length + 1,
-                url: photoURL.value,
-                isFavourite: false
-            }
+              id: photos.value.length + 1,
+              url: photoURL.value,
+              isFavourite: false,
+            };
             photos.value.push(newPhoto);
-
           };
 
           const toggleFavourite = () => {};
 
-          return { 
-            photoURL, 
-            photos, 
-            addPhoto, 
-            toggleFavourite };
+          return {
+            photoURL,
+            photos,
+            addPhoto,
+            toggleFavourite,
+          };
         },
       };
 
