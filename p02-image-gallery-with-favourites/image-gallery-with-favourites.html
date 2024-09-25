@@ -12,31 +12,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project 2 - Image Gallery - Vue 3.4</title>
 
-    <link rel="stylesheet" href="https://www.unpkg.com/normalize.css/normalize.css">
+    <link
+      rel="stylesheet"
+      href="https://www.unpkg.com/normalize.css/normalize.css"
+    />
 
-    
     <!-- note: adding 'type="text/css" is implied if not written so it is not necessary to add' -->
     <style type="text/css">
+        body {
+            font-family: monospace;
+            padding: 20px;
+            font-size: 16px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            /* grid-gap: 10px; - this is deprecated*/
+            gap: 10px;
+        }
+
+        .photo {
+            position: relative;
+            border: 1px solid #ccc;
+        }
+
+        .photo img {
+            width: 100%;
+            display: block;
+        }
+
+        .favourite-button {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 24px;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+
+        .favourite-button.active {
+            color: gold;
+        }
+
+        .no-photos {
+            text-align: center;
+            color: #999;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
 
     </style>
-    <script src = "https://www.unpkg.com/vue@3.4.0"></script>
+    <script src="https://www.unpkg.com/vue@3.4.0"></script>
   </head>
   <body>
     <div id="App">
+      <form>
+        <input placeholder="Enter image URL" />
+        <button type="submit">Add Photo</button>
+      </form>
 
+      <!-- Conditional rendering wiill go here -->
+      <p class="no-photos">No photos added yet. Add some!</p>
+
+      <div class="gallery">
+        <!-- list rendering will go here -->
+        <div class="photo">
+            <!-- image goes here -->
+             <button class="favourite-button">
+
+             </button>
+        </div>
+      </div>
     </div>
     <script>
+      const { createApp, ref, compute } = Vue;
 
-        const { createApp, ref, compute } = Vue;
+      const App = {
+        setup() {
+          const addPhoto = () => {};
 
-        const App = {
-            setup() {
+          const toggleFavourite = () => {};
 
-            }
-        };
+          return { addPhoto, toggleFavourite };
+        },
+      };
 
-        createApp(App).mount("#App");
-
+      createApp(App).mount("#App");
     </script>
   </body>
 </html>
