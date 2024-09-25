@@ -75,17 +75,20 @@
 
       <!-- Adding v-on:submit.prevent without a callback is able to make the submit button not reload the page -->
       <form @submit.prevent="addPhoto">
-        <input v-model="imageText" placeholder="Enter image URL" />
+        <input v-model="photoURL" placeholder="Enter image URL" />
         <button type="submit">Add Photo</button>
       </form>
 
       <!-- Conditional rendering wiill go here -->
-      <p class="no-photos">No photos added yet. Add some!</p>
-
-      <div class="gallery">
+      <p class="no-photos" v-if="photos.length === 0">
+        No photos added yet. Add some!
+      </p>
+      <div class="gallery" v-else>
         <!-- list rendering will go here -->
-        <div class="photo">
+        <div v-for="photo in photos" class="photo">
             <!-- image goes here -->
+             <!-- {{photo.url}} -->
+             <img :src="photo.url" alt="">
              <button class="favourite-button">
                 <!-- &#9733 generates a star emoji -->
                 &#9733
@@ -101,15 +104,32 @@
         setup() {
 
           // a ref value for the image text isn't absolutely necessary for this
-          let imageText = ref(null);
+          let photoURL = ref('');
+
+          const photos = ref([]);
 
           const addPhoto = () => {
+
+            if (photoURL.value === '') return;
+
             console.log("Photo added");
+
+            const newPhoto = {
+                id: photos.value.length + 1,
+                url: photoURL.value,
+                isFavourite: false
+            }
+            photos.value.push(newPhoto);
+
           };
 
           const toggleFavourite = () => {};
 
-          return { addPhoto, toggleFavourite, imageText };
+          return { 
+            photoURL, 
+            photos, 
+            addPhoto, 
+            toggleFavourite };
         },
       };
 
