@@ -343,6 +343,30 @@ The entire app will be typed from memory or imagination, including the script ar
           How did he use computed values in his example, since I didn't use them in mine?
 
 
+          he did it like this:
 
+            const current = computed(
+              () => questions[current.value]
+            );
+
+            const rightAnswer = computed(
+              () => answers[current.value]
+            );
+
+            const areWeDone = computed(
+              () => answers.length = current.value
+            );
+
+
+            This shows how his code is a little more declarative looking where mine runs like a step by step process
+
+
+            The way he wrote out "Next Question" and "Your Score" and how the question was printed in the UI was
+            insignificantly different than how I had mine, but his didn't have repeats of 'Next Question' written, and
+            it used score as a reactive ref value in the UI which is a bit more correct for this exercise
+
+            He also sets the next answer field to null where I use ""
+
+            He doesn't have something that decreases the score as time goes on
 
 -->
