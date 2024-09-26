@@ -14,6 +14,29 @@
         I have decided to add an x button on the top right instead of clicking on the image itself.
         This will allow the image to be clicked on for other reasons, 
         such as enlarging the image which is what would be expected in this situation vs deleting it
+
+    I'm going to complete these tasks before I check whether the instructor's implementation was much different
+
+    My result:
+
+        I was able to add an x button on the top right of each image, and clicking it does delete a photo from the list,
+        but it is not deleting the final photo.  I have been using the same one photo repeatedly instead of different ones,
+        so it is less obvious whether I have the indexing right or not.
+
+        It appears to have to do with the fact that I was using the photo.id as the index by which to remove it,
+        and it no longer is a valid index to use when a splice has occurred that changes the indexing
+
+        in order to make it find the intended photo, I'm going to do a traversal through the list and look for
+        which index is the photo id, however this is going to be suboptimal and I wonder if the instructor
+        has a better way
+
+
+        I was able to get the .isFavourite property of each photo image to toggle true and false, 
+        but I didn't get it to reactively change the class with the method I tried
+
+        I will do a commit of this version as a checkpoint before I see the instructor's soltuions and see
+        where I was needing to probably use a ref or computed value to get the favourite star to change colour,
+        as well as to see if the instructor had a better way to get the photos to delete
 -->
 
 <!DOCTYPE html>
@@ -64,6 +87,17 @@
         cursor: pointer;
       }
 
+      .delete-button {
+        background: none;
+        border: none;
+        color: #ccc;
+        font-size: 24px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
+
       .favourite-button.active {
         color: gold;
       }
@@ -97,7 +131,17 @@
           <!-- image goes here -->
           <!-- {{photo.url}} -->
           <img :src="photo.url" alt="" />
-          <button class="favourite-button">
+          <button 
+            class="delete-button"
+            @click="deletePhoto(photo)"
+          >
+          x
+          </button>
+          <button 
+            class="favourite-button"
+            @click="toggleFavourite(photo)"
+            :class="{'favourite-button.active': 'photo.isFavourite'}"
+          >
             <!-- &#9733 generates a star emoji -->
             &#9733
             <!-- using ALT code to directly show emoji in text editor, ALT + 9733 does not generate a star but something else -->
@@ -123,18 +167,34 @@
             const newPhoto = {
               id: photos.value.length + 1,
               url: photoURL.value,
-              isFavourite: false,
+              isFavourite: false, 
             };
             photos.value.push(newPhoto);
           };
 
-          const toggleFavourite = () => {};
+          const toggleFavourite = (photo) => {
+            photo.isFavourite = !photo.isFavourite;
+            console.log(`toggled favourite of id: ${photo.id} to ${photo.isFavourite}`)
+          };
+
+          const deletePhoto = (photo) => {
+
+            let photoIndex = 0;
+            for (photoIndex = 0; photoIndex < photos.value.length; photoIndex++){
+              if (photos.value[photoIndex].id === photo.id){
+                break;
+              }
+            }
+            photos.value.splice(photoIndex, 1);
+            console.log(`deleted photo ${photo.id}`);
+          }
 
           return {
             photoURL,
             photos,
             addPhoto,
             toggleFavourite,
+            deletePhoto,
           };
         },
       };
