@@ -37,6 +37,11 @@
         I will do a commit of this version as a checkpoint before I see the instructor's soltuions and see
         where I was needing to probably use a ref or computed value to get the favourite star to change colour,
         as well as to see if the instructor had a better way to get the photos to delete
+
+        The instructor showed his button colour changing code and I saw that mine wasn't working because this line:
+          :class="{'favourite-button.active': 'photo.isFavourite'}"
+        needed to say this:
+          :class="{'active': photo.isFavourite}"
 -->
 
 <!DOCTYPE html>
@@ -140,7 +145,7 @@
           <button 
             class="favourite-button"
             @click="toggleFavourite(photo)"
-            :class="{'favourite-button.active': 'photo.isFavourite'}"
+            :class="{'active': photo.isFavourite}"
           >
             <!-- &#9733 generates a star emoji -->
             &#9733
