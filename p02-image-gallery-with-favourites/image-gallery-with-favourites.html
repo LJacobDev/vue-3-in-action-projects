@@ -42,6 +42,14 @@
           :class="{'favourite-button.active': 'photo.isFavourite'}"
         needed to say this:
           :class="{'active': photo.isFavourite}"
+
+
+        AS FOR THE INDEXING FOR DELETION:
+
+          the instructor has the v-for loop that creates the images get the index at the time,
+          so splice deleting something at that index will shorten the array,
+          and then the next time it is rendered it will have refreshed indexing instead of using photo.id
+          before seeing what the instructor actually did syntaxwise, I want to try it out myself and then see him do it
 -->
 
 <!DOCTYPE html>
@@ -132,13 +140,13 @@
       </p>
       <div class="gallery" v-else>
         <!-- list rendering will go here -->
-        <div v-for="photo in photos" :key="photo.id" class="photo">
+        <div v-for="(photo, index) in photos" :key="photo.id" class="photo">
           <!-- image goes here -->
           <!-- {{photo.url}} -->
           <img :src="photo.url" alt="" />
           <button 
             class="delete-button"
-            @click="deletePhoto(photo)"
+            @click="deletePhoto(index, photo)"
           >
           x
           </button>
@@ -182,15 +190,18 @@
             console.log(`toggled favourite of id: ${photo.id} to ${photo.isFavourite}`)
           };
 
-          const deletePhoto = (photo) => {
+          const deletePhoto = (index, photo) => {
 
-            let photoIndex = 0;
-            for (photoIndex = 0; photoIndex < photos.value.length; photoIndex++){
-              if (photos.value[photoIndex].id === photo.id){
-                break;
-              }
-            }
-            photos.value.splice(photoIndex, 1);
+            // let photoIndex = 0;
+            // for (photoIndex = 0; photoIndex < photos.value.length; photoIndex++){
+            //   if (photos.value[photoIndex].id === photo.id){
+            //     break;
+            //   }
+            // }
+
+            //now the index passed in will point to something correct for a list that has been partially deleted from
+            //but the photo.id will still point to the true photo.id and not its current index value
+            photos.value.splice(index, 1);
             console.log(`deleted photo ${photo.id}`);
           }
 
