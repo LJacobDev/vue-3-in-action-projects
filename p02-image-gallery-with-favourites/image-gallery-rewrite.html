@@ -1,0 +1,155 @@
+<!-- 
+
+ Purpose:
+
+ This is the image gallery mini project being rewritten from memory as much as possible in order to reinforce understanding of what it was about.
+ It might have some difference in how the elements are styled but will generally look and function as the original
+
+ -->
+
+<!-- 
+ 
+Results:
+
+I was able to get the correct functionality and close to the right appearance as the original
+However, as the CSS styling was not part of the lesson and was provided by the teacher,
+my recreation of the CSS from memory is missing a few details that are causing the buttons to not be positioned as the original
+But what is here has been written fully from memory and without looking at either the original nor any reference or documentation
+
+I'm adding an additional p element in order to make deliberate use of computed properties
+
+After I've made the github commit of this I'll go look at what is needed to make the buttons appear on the proper side of each image
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Gallery Rewrite - Vue 3.4</title>
+    <link
+      rel="stylesheet"
+      href="https://www.unpkg.com/normalise.css/normalize.css"
+    />
+    <script src="https://www.unpkg.com/vue@3.4"></script>
+    <style>
+      body {
+        font: monospace;
+        padding: 10px;
+      }
+
+      .favourite-button {
+        border: none;
+        background: none;
+        color: #ccc;
+        position: relative;
+        bottom: 5px;
+        right: 5px;
+        font-size: 20px;
+      }
+
+      .favourite-button.active {
+        color: gold;
+      }
+
+      .delete-button {
+        border: none;
+        background: none;
+        color: #ccc;        
+        position: relative;
+        top: 5px;
+        right: 5px;
+        font-size: 20px;
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .photo {
+        width: 100%;
+      }
+
+      .information-text {
+        text-align: center;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <form @submit.prevent="addPhoto">
+        <input v-model="photoURL" placeholder="Enter image url" />
+        <button>Add photo</button>
+      </form>
+
+      <p v-if="photos.length === 0" class="information-text">No photos in gallery. Add some!</p>
+      <div v-else>
+        <p class="information-text">There are {{gallerySize}} photos in this gallery</p>
+        <div class="gallery">
+          <div v-for="(photo, index) in photos">
+            <button class="delete-button" @click="deletePhoto(photo, index)">
+              X
+            </button>
+            <img class="photo" :src="photo.url" alt="An image" />
+            <button
+              class="favourite-button"
+              :class="{active: photo.isFavourite}"
+              @click="toggleFavourite(photo)"
+            >&#9733</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const { createApp, ref, computed } = Vue;
+
+      const App = {
+        setup() {
+          const photos = ref([]);
+          let photoURL = ref("");
+
+          const addPhoto = () => {
+            if (photoURL.value === "") return;
+
+            const photo = {
+              id: photos.value.length + 1,
+              url: photoURL.value,
+              isFavourite: false,
+            };
+
+            photos.value.push(photo);
+          };
+
+          const toggleFavourite = (photo) => {
+            photo.isFavourite = !photo.isFavourite;
+          };
+
+          const deletePhoto = (photo, index) => {
+            photos.value.splice(index, 1);
+            console.log(`Photo ${photo.id} deleted`);
+          };
+
+          let gallerySize = computed(() => {
+            return photos.value.length + 1;
+          });
+
+          return {
+            photos,
+            photoURL,
+            addPhoto,
+            toggleFavourite,
+            deletePhoto,
+            gallerySize,
+          };
+        },
+      };
+
+      createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
