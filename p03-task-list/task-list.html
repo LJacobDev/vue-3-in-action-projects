@@ -112,7 +112,6 @@
           <div
             class="task"
             :class="{
-            completed: task.isDone, 
             [task.priority.toLowerCase()]: true,
             }"
             v-for="(task, index) in tasks"
@@ -123,7 +122,7 @@
             <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
             <input type="checkbox" v-model="task.isDone" />
             <!-- Task description -->
-            <span>{{task.description}}</span>
+            <span :class="{completed: task.isDone}">{{task.description}}</span>
             <!-- remove button -->
             <button class="remove-button" @click="removeTask(index)">X</button>
           </div>
@@ -159,8 +158,10 @@
           );
 
           onMounted(() => {
+
             // temporarily disabling this because it even takes focus out of the text editor while making the app
             // inputTextBox.value.focus();
+
             // tasks.value = JSON.parse(localStorage.getItem('tasklist'));
             //it turns out that onMounted wasn't needed for loading the values, because the localStorage
             //is available at the time during which the tasks ref is made, so it can be accessed there instead
@@ -181,6 +182,7 @@
 
             taskText.value = "";
             priorityText.value = "";
+            inputTextBox.value.focus();
 
             //trying to set the priority with the select box's value is not working as initially expected
             // console.log('value', priorityBox.value);
