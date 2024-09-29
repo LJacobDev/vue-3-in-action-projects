@@ -77,7 +77,7 @@
           v-model="taskText"
           placeholder="Enter a task..."
         />
-        <select ref="priorityBox">
+        <select v-model="priorityText">
           <option disabled value="">Select priority</option>
           <option>High</option>
           <option>Medium</option>
@@ -127,7 +127,8 @@
         setup() {
           //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
           const inputTextBox = ref(null);
-          const priorityBox = ref(null);
+          let taskText = ref('');
+          let  priorityText = ref(null);
 
           const tasks = ref([]);
 
@@ -144,9 +145,18 @@
             const newTask = {
               id: tasks.value.length + 1,
               isDone: false,
-              description: inputTextBox.value.value,
-              priority: "medium",
+              //the instructor used a ref with v-model in the inputText box to get the value,
+              //but using the Template Ref with value.value can also access it albeit in a worse looking way
+              //description: inputTextBox.value.value,
+              description: taskText.value,
+              priority: priorityText.value,
             };
+
+            //trying to set the priority with the select box's value is not working as initially expected
+            // console.log('value', priorityBox.value);
+
+            //the reason it wasn't working was because I needed to use v-model to connect to the select element,
+            //not a template ref which is what I was originally trying to do with it
 
             tasks.value.push(newTask);
           };
@@ -157,6 +167,8 @@
 
           return {
             inputTextBox,
+            taskText,
+            priorityText,
             tasks,
             addTask,
             removeTask,
