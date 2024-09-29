@@ -99,11 +99,21 @@
         <h3>Your Tasks:</h3>
         <!-- This is a list of tasks -->
         <div>
-          <div v-for="(task, index) in tasks">
+          <div class="task" v-for="(task, index) in tasks" :key="task.id">
             <!-- Is task done? -->
-            <input type="checkbox" :checked="task.isDone" />
+            <!-- <input type="checkbox" :checked="task.isDone" /> -->
+            <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
+            <input type="checkbox" v-model="task.isDone" />
             <!-- Task description -->
-            <span style="padding-left: 10px">{{task.description}}</span>
+            <span
+              :class="{
+                completed: task.isDone, 
+                low: task.priority === 'Low',
+                medium: task.priority === 'Medium',
+                high: task.priority === 'High',
+                }"
+              >{{task.description}}</span
+            >
             <!-- remove button -->
             <button class="remove-button" @click="removeTask(index)">X</button>
           </div>
@@ -121,7 +131,7 @@
 
           const tasks = ref([]);
 
-        //   tasks.value.push({ isDone: false, description: "this task" });
+          //   tasks.value.push({ isDone: false, description: "this task" });
 
           onMounted(() => {
             // temporarily disabling this because it even takes focus out of the text editor while making the app
@@ -132,18 +142,18 @@
             if (inputTextBox.value === "") return;
 
             const newTask = {
+              id: tasks.value.length + 1,
               isDone: false,
               description: inputTextBox.value.value,
               priority: priorityBox.value,
             };
 
             tasks.value.push(newTask);
-
           };
 
           const removeTask = (index) => {
-            tasks.value.splice(index,1);
-          }
+            tasks.value.splice(index, 1);
+          };
 
           return {
             inputTextBox,
