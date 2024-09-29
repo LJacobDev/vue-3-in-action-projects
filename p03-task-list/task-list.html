@@ -45,7 +45,7 @@
         border-color: red;
       }
 
-      .medieum {
+      .medium {
         border-color: orange;
       }
 
@@ -99,21 +99,21 @@
         <h3>Your Tasks:</h3>
         <!-- This is a list of tasks -->
         <div>
-          <div class="task" v-for="(task, index) in tasks" :key="task.id">
+          <div
+            class="task"
+            :class="{
+            completed: task.isDone, 
+            [task.priority.toLowerCase()]: true,
+            }"
+            v-for="(task, index) in tasks"
+            :key="task.id"
+          >
             <!-- Is task done? -->
             <!-- <input type="checkbox" :checked="task.isDone" /> -->
             <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
             <input type="checkbox" v-model="task.isDone" />
             <!-- Task description -->
-            <span
-              :class="{
-                completed: task.isDone, 
-                low: task.priority === 'Low',
-                medium: task.priority === 'Medium',
-                high: task.priority === 'High',
-                }"
-              >{{task.description}}</span
-            >
+            <span>{{task.description}}</span>
             <!-- remove button -->
             <button class="remove-button" @click="removeTask(index)">X</button>
           </div>
@@ -145,7 +145,7 @@
               id: tasks.value.length + 1,
               isDone: false,
               description: inputTextBox.value.value,
-              priority: priorityBox.value,
+              priority: "medium",
             };
 
             tasks.value.push(newTask);
