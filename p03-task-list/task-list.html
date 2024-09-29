@@ -17,6 +17,12 @@
 
     This example was run through very quickly so I will want to make a rewrite of this from memory to enhance learning.
     
+    There is an exercise made to have us add a remove button which I already did earlier on,
+    and to add a filter functionality.
+    I was able to get a filter that works as expected to show or hide description texts,
+    but the way that I did it there were still empty divs appearing where the items existed which wasn't intended.
+    
+
 -->
 
 <!DOCTYPE html>
@@ -117,14 +123,20 @@
             v-for="(task, index) in tasks"
             :key="task.id"
           >
-            <!-- Is task done? -->
-            <!-- <input type="checkbox" :checked="task.isDone" /> -->
-            <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
-            <input type="checkbox" v-model="task.isDone" />
-            <!-- Task description -->
-            <span :class="{completed: task.isDone}">{{task.description}}</span>
-            <!-- remove button -->
-            <button class="remove-button" @click="removeTask(index)">X</button>
+            <template v-if="task.description.includes(filterText)">
+              <!-- Is task done? -->
+              <!-- <input type="checkbox" :checked="task.isDone" /> -->
+              <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
+              <input type="checkbox" v-model="task.isDone" />
+              <!-- Task description -->
+              <span :class="{completed: task.isDone}"
+                >{{task.description}}</span
+              >
+              <!-- remove button -->
+              <button class="remove-button" @click="removeTask(index)">
+                X
+              </button>
+            </template>
           </div>
         </div>
       </div>
@@ -140,8 +152,11 @@
           //making priorityText default to null made the select box not work properly, but setting it to '' did work
           //which means that the 'Select priority' default text began to appear properly
           const priorityText = ref("");
+          const filterText = ref("");
 
-          const tasks = ref(JSON.parse(localStorage.getItem("tasklist") ?? '[]'));
+          const tasks = ref(
+            JSON.parse(localStorage.getItem("tasklist") ?? "[]")
+          );
 
           //   tasks.value.push({ isDone: false, description: "this task" });
 
@@ -158,10 +173,8 @@
           );
 
           onMounted(() => {
-
             // temporarily disabling this because it even takes focus out of the text editor while making the app
             // inputTextBox.value.focus();
-
             // tasks.value = JSON.parse(localStorage.getItem('tasklist'));
             //it turns out that onMounted wasn't needed for loading the values, because the localStorage
             //is available at the time during which the tasks ref is made, so it can be accessed there instead
@@ -206,6 +219,7 @@
             tasks,
             addTask,
             removeTask,
+            filterText,
           };
         },
       };
