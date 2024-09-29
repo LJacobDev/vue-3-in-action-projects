@@ -4,9 +4,16 @@
     in order to more fully think about everything that is in it.
 
     Any additions of functionality will be tried first before seeing how the instructor does it,
-    But after having read the Vue documentation about each topic,
-    And then comparing my attempt with what the instructor showed to do
+    But after having read the Vue documentation about each topic.
 
+    The process went well overall and I was able to generally make the app based on guessing what to do
+    between having read the documentation and seeing what the instructor said the next step would be about.
+
+    I got stuck on a few minor details and worked out the ways to fix them by checking what the instructor did
+    and adjusting mine.
+
+    This example was run through very quickly so I will want to make a rewrite of this from memory to enhance learning.
+    
 -->
 
 <!DOCTYPE html>
@@ -122,7 +129,7 @@
     </div>
 
     <script>
-      const { createApp, ref, onMounted } = Vue;
+      const { createApp, ref, onMounted, watch } = Vue;
       App = {
         setup() {
           //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
@@ -136,9 +143,17 @@
 
           //   tasks.value.push({ isDone: false, description: "this task" });
 
+          watch(tasks, () => {
+            console.log('saving tasks to localstorage');
+            localStorage.setItem('tasklist', tasks);
+          })
+
           onMounted(() => {
             // temporarily disabling this because it even takes focus out of the text editor while making the app
             // inputTextBox.value.focus();
+
+            tasks.value = localStorage.getItem('tasklist');
+
           });
 
           const addTask = () => {
