@@ -21,7 +21,10 @@
     and to add a filter functionality.
     I was able to get a filter that works as expected to show or hide description texts,
     but the way that I did it there were still empty divs appearing where the items existed which wasn't intended.
-    
+
+    The instructor used a different approach, not using v-if, but rather using array.filter()
+
+    This project is now complete and is understood, but I will want to rewrite this from memory as a further exercise
 
 -->
 
@@ -120,30 +123,26 @@
             :class="{
             [task.priority.toLowerCase()]: true,
             }"
-            v-for="(task, index) in tasks"
+            v-for="(task, index) in filteredTasks"
             :key="task.id"
           >
-            <template v-if="task.description.includes(filterText)">
-              <!-- Is task done? -->
-              <!-- <input type="checkbox" :checked="task.isDone" /> -->
-              <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
-              <input type="checkbox" v-model="task.isDone" />
-              <!-- Task description -->
-              <span :class="{completed: task.isDone}"
-                >{{task.description}}</span
-              >
-              <!-- remove button -->
-              <button class="remove-button" @click="removeTask(index)">
-                X
-              </button>
-            </template>
+            <!-- <template v-if="task.description.toLowerCase().includes(filterText.toLowerCase())"> -->
+            <!-- Is task done? -->
+            <!-- <input type="checkbox" :checked="task.isDone" /> -->
+            <!-- I think using v-model makes it bidirectional so that checking it will change the ref value -->
+            <input type="checkbox" v-model="task.isDone" />
+            <!-- Task description -->
+            <span :class="{completed: task.isDone}">{{task.description}}</span>
+            <!-- remove button -->
+            <button class="remove-button" @click="removeTask(index)">X</button>
+            <!-- </template> -->
           </div>
         </div>
       </div>
     </div>
 
     <script>
-      const { createApp, ref, onMounted, watch } = Vue;
+      const { createApp, ref, onMounted, watch, computed } = Vue;
       App = {
         setup() {
           //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
@@ -157,6 +156,14 @@
           const tasks = ref(
             JSON.parse(localStorage.getItem("tasklist") ?? "[]")
           );
+
+          const filteredTasks = computed(() => {
+            return tasks.value.filter((task) =>
+              task.description
+                .toLowerCase()
+                .includes(filterText.value.toLowerCase())
+            );
+          });
 
           //   tasks.value.push({ isDone: false, description: "this task" });
 
@@ -220,6 +227,7 @@
             addTask,
             removeTask,
             filterText,
+            filteredTasks,
           };
         },
       };
