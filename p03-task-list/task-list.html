@@ -127,8 +127,10 @@
         setup() {
           //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
           const inputTextBox = ref(null);
-          let taskText = ref('');
-          let  priorityText = ref(null);
+          const taskText = ref('');
+          //making priorityText default to null made the select box not work properly, but setting it to '' did work
+          //which means that the 'Select priority' default text began to appear properly
+          const priorityText = ref('');
 
           const tasks = ref([]);
 
@@ -140,7 +142,7 @@
           });
 
           const addTask = () => {
-            if (inputTextBox.value === "") return;
+            if (taskText.value === "" || priorityText.value === '') return;
 
             const newTask = {
               id: tasks.value.length + 1,
@@ -152,13 +154,18 @@
               priority: priorityText.value,
             };
 
+            taskText.value = '';
+            priorityText.value = '';
+
             //trying to set the priority with the select box's value is not working as initially expected
             // console.log('value', priorityBox.value);
 
             //the reason it wasn't working was because I needed to use v-model to connect to the select element,
             //not a template ref which is what I was originally trying to do with it
 
-            tasks.value.push(newTask);
+            // tasks.value.push(newTask);
+            //unshift will put the new tasks at the top of the list
+            tasks.value.unshift(newTask);
           };
 
           const removeTask = (index) => {
