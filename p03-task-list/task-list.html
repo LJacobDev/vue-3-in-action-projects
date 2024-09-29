@@ -1,0 +1,134 @@
+<!-- 
+
+    The starter code for this will be copied over by typing it out directly, 
+    in order to more fully think about everything that is in it.
+
+    Any additions of functionality will be tried first before seeing how the instructor does it,
+    But after having read the Vue documentation about each topic,
+    And then comparing my attempt with what the instructor showed to do
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task List - Vue 3.4</title>
+
+    <link
+      rel="stylesheet"
+      href="https://www.unpkg.com/normalize.css/normalize.css"
+    />
+    <script src="https://www.unpkg.com/vue@3.4.0"></script>
+
+    <style>
+      body {
+        font-family: "Arial", "sans-serif";
+        padding: 20px;
+        font-size: 16px;
+        background-color: #f4f4f9;
+      }
+
+      .task {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #ffffff;
+        padding: 10px 20px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border-left: 5px solid;
+      }
+
+      .high {
+        border-color: red;
+      }
+
+      .medieum {
+        border-color: orange;
+      }
+
+      .low {
+        border-color: green;
+      }
+
+      .completed {
+        text-decoration: line-through;
+        color: #bbbbbb;
+      }
+
+      .remove-button {
+        color: red;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Form for adding tasks -->
+      <form>
+        <input
+          type="text"
+          ref="inputTextBox"
+          v-model="taskText"
+          placeholder="Enter a task..."
+        />
+        <select>
+          <option disabled value="">Select priority</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+        <button>Add Task</button>
+      </form>
+
+      <!-- Task filtering -->
+      <input type="text" v-model="filterText" placeholder="Filter tasks..." />
+
+      <!-- If there are no tasks -->
+      <div>
+        <p>No tasks to show. Try adding tasks or changing the filter.</p>
+      </div>
+
+      <!-- Task displaying -->
+      <div>
+        <h3>Your Tasks:</h3>
+        <!-- This is a list of tasks -->
+        <div>
+          <div>
+            <!-- Is task done? -->
+            <input type="checkbox" />
+            <!-- Task description -->
+            <span></span>
+            <!-- remove button -->
+          </div>
+          <button class="remove-button">X</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const { createApp, ref, onMounted } = Vue;
+      App = {
+        setup() {
+
+          const inputTextBox = ref(null);
+
+          onMounted(() => {
+            // temporarily disabling this because it even takes focus out of the text editor while making the app
+            // inputTextBox.value.focus();
+          });
+
+          return {
+            inputTextBox,
+          };
+        },
+      };
+      createApp(App).mount("#app");
+    </script>
+  </body>
+</html>
