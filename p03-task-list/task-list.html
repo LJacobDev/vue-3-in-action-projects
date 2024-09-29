@@ -12,6 +12,9 @@
     I got stuck on a few minor details and worked out the ways to fix them by checking what the instructor did
     and adjusting mine.
 
+    I attempted to make localStorage work by using its setItem and getItem methods, 
+    but didn't know, until the instructor showed it, that it needed JSON.stringify and JSON.parse used as well
+
     This example was run through very quickly so I will want to make a rewrite of this from memory to enhance learning.
     
 -->
@@ -134,30 +137,37 @@
         setup() {
           //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
           const inputTextBox = ref(null);
-          const taskText = ref('');
+          const taskText = ref("");
           //making priorityText default to null made the select box not work properly, but setting it to '' did work
           //which means that the 'Select priority' default text began to appear properly
-          const priorityText = ref('');
+          const priorityText = ref("");
 
-          const tasks = ref([]);
+          const tasks = ref(JSON.parse(localStorage.getItem("tasklist") ?? '[]'));
 
           //   tasks.value.push({ isDone: false, description: "this task" });
 
-          watch(tasks, () => {
-            console.log('saving tasks to localstorage');
-            localStorage.setItem('tasklist', tasks);
-          })
+          watch(
+            tasks,
+            () => {
+              console.log("saving tasks to localstorage");
+              localStorage.setItem("tasklist", JSON.stringify(tasks.value));
+              // console.log(localStorage.getItem('tasklist'));
+            },
+            //using the deep watch option will make it respond to any time a property in any of the task list changes
+            //this is ok to use here because the task list will not become large enough to have performance slowdowns
+            { deep: true }
+          );
 
           onMounted(() => {
             // temporarily disabling this because it even takes focus out of the text editor while making the app
             // inputTextBox.value.focus();
-
-            tasks.value = localStorage.getItem('tasklist');
-
+            // tasks.value = JSON.parse(localStorage.getItem('tasklist'));
+            //it turns out that onMounted wasn't needed for loading the values, because the localStorage
+            //is available at the time during which the tasks ref is made, so it can be accessed there instead
           });
 
           const addTask = () => {
-            if (taskText.value === "" || priorityText.value === '') return;
+            if (taskText.value === "" || priorityText.value === "") return;
 
             const newTask = {
               id: tasks.value.length + 1,
@@ -169,8 +179,8 @@
               priority: priorityText.value,
             };
 
-            taskText.value = '';
-            priorityText.value = '';
+            taskText.value = "";
+            priorityText.value = "";
 
             //trying to set the priority with the select box's value is not working as initially expected
             // console.log('value', priorityBox.value);
