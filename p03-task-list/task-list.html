@@ -90,23 +90,23 @@
       <input type="text" v-model="filterText" placeholder="Filter tasks..." />
 
       <!-- If there are no tasks -->
-      <div>
+      <div v-if="tasks.length === 0">
         <p>No tasks to show. Try adding tasks or changing the filter.</p>
       </div>
 
       <!-- Task displaying -->
-      <div>
+      <div v-else>
         <h3>Your Tasks:</h3>
         <!-- This is a list of tasks -->
         <div>
-          <div>
+          <div v-for="(task, index) in tasks">
             <!-- Is task done? -->
-            <input type="checkbox" />
+            <input type="checkbox" :checked="task.isDone" />
             <!-- Task description -->
-            <span></span>
+            <span style="padding-left:10px">{{task.description}}</span>
             <!-- remove button -->
+            <button class="remove-button">X</button>
           </div>
-          <button class="remove-button">X</button>
         </div>
       </div>
     </div>
@@ -116,7 +116,12 @@
       App = {
         setup() {
 
+          //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
           const inputTextBox = ref(null);
+
+          const tasks = ref([]);
+
+          tasks.value.push({isDone:false, description: "this task"});
 
           onMounted(() => {
             // temporarily disabling this because it even takes focus out of the text editor while making the app
@@ -125,6 +130,7 @@
 
           return {
             inputTextBox,
+            tasks,
           };
         },
       };
