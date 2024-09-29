@@ -70,14 +70,14 @@
   <body>
     <div id="app">
       <!-- Form for adding tasks -->
-      <form>
+      <form @submit.prevent="addTask">
         <input
           type="text"
           ref="inputTextBox"
           v-model="taskText"
           placeholder="Enter a task..."
         />
-        <select>
+        <select ref="priorityBox">
           <option disabled value="">Select priority</option>
           <option>High</option>
           <option>Medium</option>
@@ -103,9 +103,9 @@
             <!-- Is task done? -->
             <input type="checkbox" :checked="task.isDone" />
             <!-- Task description -->
-            <span style="padding-left:10px">{{task.description}}</span>
+            <span style="padding-left: 10px">{{task.description}}</span>
             <!-- remove button -->
-            <button class="remove-button">X</button>
+            <button class="remove-button" @click="removeTask(index)">X</button>
           </div>
         </div>
       </div>
@@ -115,22 +115,41 @@
       const { createApp, ref, onMounted } = Vue;
       App = {
         setup() {
-
           //getting a template ref in the style of Vue 3.4, but this changes in 3.5 to something else
           const inputTextBox = ref(null);
+          const priorityBox = ref(null);
 
           const tasks = ref([]);
 
-          tasks.value.push({isDone:false, description: "this task"});
+        //   tasks.value.push({ isDone: false, description: "this task" });
 
           onMounted(() => {
             // temporarily disabling this because it even takes focus out of the text editor while making the app
             // inputTextBox.value.focus();
           });
 
+          const addTask = () => {
+            if (inputTextBox.value === "") return;
+
+            const newTask = {
+              isDone: false,
+              description: inputTextBox.value.value,
+              priority: priorityBox.value,
+            };
+
+            tasks.value.push(newTask);
+
+          };
+
+          const removeTask = (index) => {
+            tasks.value.splice(index,1);
+          }
+
           return {
             inputTextBox,
             tasks,
+            addTask,
+            removeTask,
           };
         },
       };
