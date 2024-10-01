@@ -4,7 +4,7 @@
     Some CSS styling may differ, but the functionality will be right.
 
 
-    Comments containing text: FIX THIS mark areas where things aren't working properly yet
+    Comments containing text: 'FIX THIS' mark areas where things aren't working properly yet
 
     currently:
 
@@ -24,6 +24,24 @@
     - how to make 'Select a priority' appear as default in the select input
     - how to make the priorty colour coded left border appear on the task items
     - how to make the filter show filtered tasks and not go blank like it was doing
+
+    Reasons why these three issues happened / what was found out about fixing them:
+
+
+    ... incidentally, I omitted the :key="task.id" which is something I was hoping not to do, 
+    as I want to remember to use :key in every v-for that I can
+
+    ... added :key="task.id"
+
+    ... when I added attribute ' value="" ' to the select element, the 'select a priority' default text appeared
+
+    ... the border color missing was fixed by adding the style rule 'solid' next to the px size of border-left
+
+    ... the filtered tasks were showing blank results becaus I hadn't returned filteredTasks array in the setup method
+
+
+    Now everything works just like the original intended functionality
+
 
 -->
 
@@ -49,7 +67,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-left: 10px;
+        border-left: 10px solid;
         border-radius: 5px;
         background-color: #ffffff;
       }
@@ -94,7 +112,7 @@
         />
         <select v-model="priorityLevel">
           <!-- FIX THIS: this is currently not showing 'select a priority' as the default selection on reload -->
-          <option disabled>Select a priority</option>
+          <option disabled value="">Select a priority</option>
           <option>High</option>
           <option>Medium</option>
           <option>Low</option>
@@ -111,7 +129,15 @@
       <div v-else>
         <h3 class="info-text">Your Tasks</h3>
         <!-- FIX THIS:  there should be a coloured border appearing on the left showing the priority level -->
-        <div v-for="(task, index) in filteredTasks" :class="{task:true, completed: task.isDone, [task.priority.toLowerCase()]:true}">
+        <div
+          v-for="(task, index) in filteredTasks"
+          :key="task.id"
+          :class="{
+            task:true,
+            completed: task.isDone,
+            [task.priority.toLowerCase()]:true
+        }"
+        >
           <input type="checkbox" v-model="task.isDone" />
           <p>{{task.description}}</p>
           <button @click="removeTask(index)" class="remove-button">X</button>
@@ -128,50 +154,55 @@
           const priorityLevel = ref("");
           const filterText = ref("");
 
-          const tasks = ref(
-            JSON.parse( localStorage.getItem('tasks') ?? '[]')
-          );
+          const tasks = ref(JSON.parse(localStorage.getItem("tasks") ?? "[]"));
 
-        // FIX THIS: things were working until I added this filter, then the tasks stopped showing  
-          const filteredTasks = computed( () => {
-            tasks.value.filter( task => task.description.toLowerCase().includes(filterText.value.toLowerCase()));
+          // FIX THIS: things were working until I added this filter, then the tasks stopped showing
+          const filteredTasks = computed(() => {
+            return tasks.value.filter((task) =>
+              task.description
+                .toLowerCase()
+                .includes(filterText.value.toLowerCase())
+            );
           });
 
-        //   A Test Value  
-        //   tasks.value.unshift({
-        //     id: 1,
-        //     description: "test task",
-        //     priority: "High",
-        //     isDone: false,
-        //   });
+          //   A Test Value
+          //   tasks.value.unshift({
+          //     id: 1,
+          //     description: "test task",
+          //     priority: "High",
+          //     isDone: false,
+          //   });
 
           const addTask = () => {
-            if (taskText.value === '' || priorityLevel.value === '') return;
+            if (taskText.value === "" || priorityLevel.value === "") return;
 
             tasks.value.unshift({
-                id: tasks.value.length + 1,
-                description: taskText.value,
-                priority: priorityLevel.value,
-                isDone: false,
-            })
-            taskText.value = '';
-            priorityLevel.value = '';
+              id: tasks.value.length + 1,
+              description: taskText.value,
+              priority: priorityLevel.value,
+              isDone: false,
+            });
+            taskText.value = "";
+            priorityLevel.value = "";
             taskInput.value.focus();
-          }
+          };
 
           const removeTask = (index) => {
-            tasks.value.splice(index,1);
-          }
+            tasks.value.splice(index, 1);
+          };
 
-
-          watch(tasks, () => {
-            localStorage.setItem('tasks', JSON.stringify(tasks.value));
-          }, {deep: true});
+          watch(
+            tasks,
+            () => {
+              localStorage.setItem("tasks", JSON.stringify(tasks.value));
+            },
+            { deep: true }
+          );
 
           onMounted(() => {
             // I keep this disabled because the live server makes the text editor lose focus when typing with it enabled
             // taskInput.value.focus();
-          })
+          });
 
           return {
             taskInput,
@@ -181,6 +212,7 @@
             tasks,
             addTask,
             removeTask,
+            filteredTasks,
           };
         },
       };
