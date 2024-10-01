@@ -59,15 +59,33 @@
 
   <body>
     <div id="app">
-
+        <form>
+            <input v-model="taskText" :ref="taskInput" placeholder="Enter new task...">
+            <select v-model="priorityLevel">
+                <!-- FIX THIS: this is currently not showing 'select a priority' as the default selection on reload -->
+                <option disabled>Select a priority</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+            </select>
+            <button>Add new task</button>
+        </form>
     </div>
     <script>
         const { createApp, ref, computed, watch, onMounted } = Vue;
 
         App = {
             setup() {
-                return {
 
+                const taskInput = ref(null);
+                const taskText = ref('');
+                const priorityLevel = ref('');
+
+
+                return {
+                    taskInput,
+                    taskText,
+                    priorityLevel,
                 }
             }
         }
