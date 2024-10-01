@@ -3,6 +3,28 @@
     in order to show that I was able to understand the key ideas.
     Some CSS styling may differ, but the functionality will be right.
 
+
+    Comments containing text: FIX THIS mark areas where things aren't working properly yet
+
+    currently:
+
+        the priority coloured border is not appearing even though I meant for it to
+        the select box is not defaulting to 'select a priority' even though I meant for it to
+
+    I have all of the rest of the functionality done except saving and loading with localStorage, and the filter
+
+    I'll add the filter and localStorage, 
+    then I might look at the reference material to figure out my two unsolved issues
+
+    localStorage worked fine,
+    my filter of the tasks made the tasks stop appearing, so I will want to check that in the original too
+
+    Things to check in the original:
+
+    - how to make 'Select a priority' appear as default in the select input
+    - how to make the priorty colour coded left border appear on the task items
+    - how to make the filter show filtered tasks and not go blank like it was doing
+
 -->
 
 <!DOCTYPE html>
@@ -46,6 +68,7 @@
 
       .completed {
         text-decoration: line-through;
+        color: #cccccc;
       }
 
       .remove-button {
@@ -53,44 +76,116 @@
         background: none;
         color: red;
       }
+
+      .info-text {
+        text-align: center;
+      }
     </style>
     <script src="https://www.unpkg.com/vue@3.4.0"></script>
   </head>
 
   <body>
     <div id="app">
-        <form>
-            <input v-model="taskText" :ref="taskInput" placeholder="Enter new task...">
-            <select v-model="priorityLevel">
-                <!-- FIX THIS: this is currently not showing 'select a priority' as the default selection on reload -->
-                <option disabled>Select a priority</option>
-                <option>High</option>
-                <option>Medium</option>
-                <option>Low</option>
-            </select>
-            <button>Add new task</button>
-        </form>
+      <form @submit.prevent="addTask">
+        <input
+          v-model="taskText"
+          ref="taskInput"
+          placeholder="Enter new task..."
+        />
+        <select v-model="priorityLevel">
+          <!-- FIX THIS: this is currently not showing 'select a priority' as the default selection on reload -->
+          <option disabled>Select a priority</option>
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+        <button>Add new task</button>
+      </form>
+
+      <input v-model="filterText" placeholder="Filter tasks..." />
+
+      <p v-if="tasks.length === 0" class="info-text">
+        No tasks in list. Add some!
+      </p>
+
+      <div v-else>
+        <h3 class="info-text">Your Tasks</h3>
+        <!-- FIX THIS:  there should be a coloured border appearing on the left showing the priority level -->
+        <div v-for="(task, index) in filteredTasks" :class="{task:true, completed: task.isDone, [task.priority.toLowerCase()]:true}">
+          <input type="checkbox" v-model="task.isDone" />
+          <p>{{task.description}}</p>
+          <button @click="removeTask(index)" class="remove-button">X</button>
+        </div>
+      </div>
     </div>
     <script>
-        const { createApp, ref, computed, watch, onMounted } = Vue;
+      const { createApp, ref, computed, watch, onMounted } = Vue;
 
-        App = {
-            setup() {
+      App = {
+        setup() {
+          const taskInput = ref(null);
+          const taskText = ref("");
+          const priorityLevel = ref("");
+          const filterText = ref("");
 
-                const taskInput = ref(null);
-                const taskText = ref('');
-                const priorityLevel = ref('');
+          const tasks = ref(
+            JSON.parse( localStorage.getItem('tasks') ?? '[]')
+          );
+
+        // FIX THIS: things were working until I added this filter, then the tasks stopped showing  
+          const filteredTasks = computed( () => {
+            tasks.value.filter( task => task.description.toLowerCase().includes(filterText.value.toLowerCase()));
+          });
+
+        //   A Test Value  
+        //   tasks.value.unshift({
+        //     id: 1,
+        //     description: "test task",
+        //     priority: "High",
+        //     isDone: false,
+        //   });
+
+          const addTask = () => {
+            if (taskText.value === '' || priorityLevel.value === '') return;
+
+            tasks.value.unshift({
+                id: tasks.value.length + 1,
+                description: taskText.value,
+                priority: priorityLevel.value,
+                isDone: false,
+            })
+            taskText.value = '';
+            priorityLevel.value = '';
+            taskInput.value.focus();
+          }
+
+          const removeTask = (index) => {
+            tasks.value.splice(index,1);
+          }
 
 
-                return {
-                    taskInput,
-                    taskText,
-                    priorityLevel,
-                }
-            }
-        }
+          watch(tasks, () => {
+            localStorage.setItem('tasks', JSON.stringify(tasks.value));
+          }, {deep: true});
 
-        createApp(App).mount("#app");
+          onMounted(() => {
+            // I keep this disabled because the live server makes the text editor lose focus when typing with it enabled
+            // taskInput.value.focus();
+          })
+
+          return {
+            taskInput,
+            taskText,
+            priorityLevel,
+            filterText,
+            tasks,
+            addTask,
+            removeTask,
+          };
+        },
+      };
+
+      createApp(App).mount("#app");
     </script>
   </body>
 </html>
