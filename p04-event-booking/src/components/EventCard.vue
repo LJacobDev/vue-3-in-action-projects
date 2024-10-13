@@ -7,16 +7,22 @@ defineProps({
 defineEmits(['register'])
 
 import RoundButton from '@/components/RoundButton.vue'
-import RoundedCard from '@/components/RoundedCard.vue';
+import SectionedCard from '@/components/SectionedCard.vue'
 </script>
 
 <template>
-  <RoundedCard>
-    <h3 class="p-4 font-medium text-xl border-b border-gray-300">{{ title }}</h3>
-    <p class="p-4 border-b border-gray-300">{{ when }}</p>
-    <p class="p-4">{{ description }}</p>
-    <section class="flex justify-end p-4">
-      <RoundButton @click="$emit('register')"> Register </RoundButton>
-    </section>
-  </RoundedCard>
+  <SectionedCard>
+    <template #header>
+      {{ title }}
+    </template>
+    {{ when }}
+    <template #footer>
+      <div class="space-y-4">
+        <p>{{ description }}</p>
+        <div class="flex justify-end">
+          <RoundButton @click="$emit('register')"> Register </RoundButton>
+        </div>
+      </div>
+    </template>
+  </SectionedCard>
 </template>
