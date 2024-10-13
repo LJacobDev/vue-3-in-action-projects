@@ -1,7 +1,7 @@
 <script setup>
-defineProps({
-  label: String
-})
+// defineProps({
+//   label: String
+// })
 defineEmits(['click'])
 </script>
 
@@ -10,6 +10,6 @@ defineEmits(['click'])
     @click="$emit('click')"
     class="text-sm font-medium border border-gray-300 rounded-full px-3 py 1 hover:bg-gray-100"
   >
-    {{ label }}
+    <slot></slot>
   </button>
 </template>

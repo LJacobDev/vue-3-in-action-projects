@@ -15,7 +15,9 @@ import RoundButton from '@/components/RoundButton.vue';
     <p class="p-4 border-b border-gray-300">{{ when }}</p>
     <p class="p-4">{{ description }}</p>
     <section class="flex justify-end p-4">
-      <RoundButton @click="$emit('register')" label="Register" />
+      <RoundButton @click="$emit('register')">
+        Register
+      </RoundButton>
     </section>
   </div>
 </template>
