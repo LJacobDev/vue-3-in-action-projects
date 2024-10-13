@@ -1,7 +1,4 @@
 <script setup>
-// defineProps({
-//   label: String
-// })
 defineEmits(['click'])
 </script>
 
