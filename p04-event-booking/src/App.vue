@@ -21,11 +21,11 @@ onMounted(() => {
   fetchEvents()
 })
 
-const postBooking = async () => {
+const registerBooking = async (event) => {
   const response = await fetch('http://localhost:3001/bookings', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ 'title': 'Event Booking' })
+    body: JSON.stringify({ 'title': event.title })
   })
   console.log(response)
 }
@@ -43,7 +43,7 @@ const postBooking = async () => {
           :title="event.title"
           :when="event.date"
           :description="event.description"
-          @register="postBooking"
+          @register="registerBooking(event)"
         />
       </template>
       <template v-else>
