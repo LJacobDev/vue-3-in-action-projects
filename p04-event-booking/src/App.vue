@@ -53,6 +53,7 @@ const registerBooking = async (event) => {
     })
   })
   console.log(response)
+  bookings.value.push({...newBooking, status: 'confirmed'})
 }
 </script>
 
