@@ -1,6 +1,7 @@
 <script setup>
 import EventCard from '@/components/EventCard.vue'
 import BookingItem from '@/components/BookingItem.vue'
+import LoadingEventCard from '@/components/LoadingEventCard.vue';
 
 import { onMounted, ref } from 'vue'
 const events = ref([])
@@ -25,17 +26,21 @@ onMounted(() => {
   <main class="container mx-auto my-8 space-y-8">
     <h1 class="text-4xl">Event Booking App</h1>
     <h2 class="text-2xl font-medium">All Events</h2>
-    <section v-if="!eventsLoading" class="grid grid-cols-2 gap-8">
-      <EventCard
-        v-for="event in events"
-        :key="event.id"
-        :title="event.title"
-        :when="event.date"
-        :description="event.description"
-        @register="console.log('registered!')"
-      />
+    <section class="grid grid-cols-2 gap-8">
+      <template v-if="!eventsLoading">
+        <EventCard
+          v-for="event in events"
+          :key="event.id"
+          :title="event.title"
+          :when="event.date"
+          :description="event.description"
+          @register="console.log('registered!')"
+        />
+      </template>
+      <template v-else>
+        <LoadingEventCard v-for="i in 4" :key="i"/>
+      </template>
     </section>
-    <section v-else>Loading Events...</section>
     <h2 class="text-2xl font-medium">Your Bookings</h2>
     <section class="grid grid-cols-1 gap-4">
       <BookingItem v-for="i in 3" :key="i" label="Vue Conference 2024" />
