@@ -1,14 +1,11 @@
 # p04-event-booking
 
-This template should help get you started developing with Vue 3 in Vite.
+An application made to resemble an event booking process, with the intention of demonstrating various Vue concepts.
 
-## Recommended IDE Setup
+Section 5 of the video course uses this to explain components, props, events, fallthrough attributes, slots, named slots, conditional slots, and component variants.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Section 6 of the video course uses this application to explain json-server, the fetch API, making a loading state placeholder, getting and posting information with json-server and its db.json file as a mock back end.
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
 
@@ -20,6 +17,12 @@ npm install
 
 ```sh
 npm run dev
+```
+
+### Run json-server for a mock API
+
+```sh
+npm run server
 ```
 
 ### Compile and Minify for Production

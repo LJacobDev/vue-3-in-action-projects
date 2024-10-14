@@ -53,7 +53,9 @@ const registerBooking = async (event) => {
     })
   })
   console.log(response)
-  bookings.value.push({...newBooking, status: 'confirmed'})
+
+  //this will cause the booking UI to show the new registration without needing to refresh the browser
+  bookings.value.push({ ...newBooking, status: 'confirmed' })
 }
 </script>
 
