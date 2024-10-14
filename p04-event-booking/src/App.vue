@@ -24,6 +24,7 @@ onMounted(() => {
 const postBooking = async () => {
   const response = await fetch('http://localhost:3001/bookings', {
     method: 'POST',
+    headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ 'title': 'Event Booking' })
   })
   console.log(response)
