@@ -1,14 +1,12 @@
 <script setup>
-import RoundedCard from '@/components/RoundedCard.vue'
+import SectionedCard from '@/components/SectionedCard.vue'
 defineProps({
   label: String
 })
 </script>
 
 <template>
-  <RoundedCard>
-    <div class="p-4">
+  <SectionedCard>
       {{ label }}
-    </div>
-  </RoundedCard>
+  </SectionedCard>
 </template>
