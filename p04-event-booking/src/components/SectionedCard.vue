@@ -4,7 +4,7 @@
       <slot name="header"></slot>
     </h3>
 
-    <div v-if="$slots.default" :class="{'p-4' : true, 'border-b border-gray-300': $slots.footer}">
+    <div v-if="$slots.default" :class="{ 'p-4': true, 'border-b border-gray-300': $slots.footer }">
       <slot></slot>
     </div>
 
