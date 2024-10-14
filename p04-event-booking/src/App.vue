@@ -22,10 +22,18 @@ onMounted(() => {
 })
 
 const registerBooking = async (event) => {
+
+  const newBooking = {
+    id: Date.now().toString(),
+    userId: 1,
+    eventId: event.id,
+    eventTitle: event.title,
+  };
+
   const response = await fetch('http://localhost:3001/bookings', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ 'title': event.title })
+    body: JSON.stringify({ newBooking })
   })
   console.log(response)
 }
