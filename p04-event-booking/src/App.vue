@@ -2,10 +2,14 @@
 import EventCard from '@/components/EventCard.vue'
 import BookingItem from '@/components/BookingItem.vue'
 import LoadingEventCard from '@/components/LoadingEventCard.vue'
+import LoadingBookingItem from '@/components/LoadingBookingItem.vue'
 
 import { onMounted, ref } from 'vue'
 const events = ref([])
 const eventsLoading = ref(false)
+
+const bookings = ref([])
+const bookingsLoading = ref(false)
 
 const fetchEvents = async () => {
   try {
@@ -17,8 +21,19 @@ const fetchEvents = async () => {
   }
 }
 
+const fetchBookings = async () => {
+  try {
+    bookingsLoading.value = true
+    const response = await fetch('http://localhost:3001/bookings')
+    bookings.value = await response.json()
+  } finally {
+    bookingsLoading.value = false
+  }
+}
+
 onMounted(() => {
   fetchEvents()
+  fetchBookings()
 })
 
 const registerBooking = async (event) => {
@@ -62,7 +77,12 @@ const registerBooking = async (event) => {
     </section>
     <h2 class="text-2xl font-medium">Your Bookings</h2>
     <section class="grid grid-cols-1 gap-4">
-      <BookingItem v-for="i in 3" :key="i" label="Vue Conference 2024" />
+      <template v-if="!bookingsLoading">
+        <BookingItem v-for="booking in bookings" :key="booking.id" :label="booking.eventTitle" />
+      </template>
+      <template v-else>
+        <LoadingBookingItem v-for="i in 4" :key="i" />
+      </template>
     </section>
   </main>
 </template>
