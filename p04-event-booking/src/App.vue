@@ -1,7 +1,7 @@
 <script setup>
 import EventCard from '@/components/EventCard.vue'
 import BookingItem from '@/components/BookingItem.vue'
-import LoadingEventCard from '@/components/LoadingEventCard.vue';
+import LoadingEventCard from '@/components/LoadingEventCard.vue'
 
 import { onMounted, ref } from 'vue'
 const events = ref([])
@@ -20,6 +20,14 @@ const fetchEvents = async () => {
 onMounted(() => {
   fetchEvents()
 })
+
+const postBooking = async () => {
+  const response = await fetch('http://localhost:3001/bookings', {
+    method: 'POST',
+    body: JSON.stringify({ 'title': 'Event Booking' })
+  })
+  console.log(response)
+}
 </script>
 
 <template>
@@ -34,11 +42,11 @@ onMounted(() => {
           :title="event.title"
           :when="event.date"
           :description="event.description"
-          @register="console.log('registered!')"
+          @register="postBooking"
         />
       </template>
       <template v-else>
-        <LoadingEventCard v-for="i in 4" :key="i"/>
+        <LoadingEventCard v-for="i in 4" :key="i" />
       </template>
     </section>
     <h2 class="text-2xl font-medium">Your Bookings</h2>

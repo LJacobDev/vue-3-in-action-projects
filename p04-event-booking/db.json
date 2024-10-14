@@ -18,7 +18,7 @@
       "id": "3",
       "title": "PHP Conference 2022",
       "date": "2024-05-20",
-      "description": "Join us for a day of insightful talks and networking with industry leaders in technology.",
+      "description": "Join us industry leaders in technology.",
       "location": "Convention Center, Downtown"
     },
     {
@@ -29,5 +29,21 @@
       "location": "Convention Center, Downtown"
     }
   ],
-  "bookings": []
+  "bookings": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    }
+  ]
 }
