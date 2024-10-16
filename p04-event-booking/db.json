@@ -10,59 +10,52 @@
     {
       "id": "2",
       "title": "Vue Conference 2023",
-      "date": "2024-05-20",
+      "date": "2024-05-23",
       "description": "Join us for a day of insightful talks and networking with industry leaders in technology.",
       "location": "Convention Center, Downtown"
     },
     {
       "id": "3",
       "title": "PHP Conference 2022",
-      "date": "2024-05-20",
+      "date": "2024-05-22",
       "description": "Join us industry leaders in technology.",
       "location": "Convention Center, Downtown"
     },
     {
       "id": "4",
       "title": "Rust Conference 2021",
-      "date": "2024-05-20",
+      "date": "2024-05-21",
       "description": "Join us for a day of insightful talks and networking with industry leaders in technology.",
       "location": "Convention Center, Downtown"
     }
   ],
   "bookings": [
     {
-      "id": "1728931575828",
+      "id": "1729121536049",
       "userId": 1,
       "eventId": "1",
       "eventTitle": "Rails Conference 2024",
       "status": "confirmed"
     },
     {
-      "id": "1728931576627",
+      "id": "1729121540613",
+      "userId": 1,
+      "eventId": "3",
+      "eventTitle": "PHP Conference 2022",
+      "status": "confirmed"
+    },
+    {
+      "id": "1729121541412",
       "userId": 1,
       "eventId": "2",
       "eventTitle": "Vue Conference 2023",
       "status": "confirmed"
     },
     {
-      "id": "1728931578223",
-      "userId": 1,
-      "eventId": "3",
-      "eventTitle": "PHP Conference 2022",
-      "status": "confirmed"
-    },
-    {
-      "id": "1728931579167",
+      "id": "1729121574689",
       "userId": 1,
       "eventId": "4",
       "eventTitle": "Rust Conference 2021",
-      "status": "confirmed"
-    },
-    {
-      "id": "1728934504883",
-      "userId": 1,
-      "eventId": "3",
-      "eventTitle": "PHP Conference 2022",
       "status": "confirmed"
     }
   ]
