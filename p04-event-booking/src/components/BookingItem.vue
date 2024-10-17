@@ -4,7 +4,8 @@ import RoundButton from '@/components/RoundButton.vue'
 defineProps({
   label: String,
   status: String
-})
+});
+defineEmits(['cancelBooking']);
 </script>
 
 <template>
@@ -14,7 +15,7 @@ defineProps({
         <div>{{ label }}</div>
         <div>{{ status }}</div>
       </div>
-      <RoundButton variant="danger">Cancel</RoundButton>
+      <RoundButton variant="danger" @click="$emit('cancelBooking')">Cancel</RoundButton>
     </div>
   </SectionedCard>
 </template>
