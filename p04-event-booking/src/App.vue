@@ -84,22 +84,25 @@ const registerBooking = async (event) => {
   }
 }
 
-
 const cancelBooking = async (booking) => {
-    try {
-      const response = await fetch(`http://localhost:3001/bookings/${booking.id}`, {
-        method: 'DELETE'
-      })
+  const cancel_index = bookings.value.findIndex((b) => b.id === booking.id)
+  const latestStatus = bookings.value[cancel_index].status
 
-      if(response.ok){
-        bookings.value = bookings.value.filter( b => b.id !== booking.id);
-      }
+  try {
+    bookings.value[cancel_index].status = 'pending cancellation'
 
-    } catch (e) {
-      alert(`There was an error deleting the booking: ${e.toString()}`)
+    const response = await fetch(`http://localhost:3001/bookings/${booking.id}`, {
+      method: 'DELETE'
+    })
+
+    if (response.ok) {
+      bookings.value = bookings.value.filter((b) => b.id !== booking.id)
     }
+  } catch (e) {
+    alert(`There was an error deleting the booking: ${e.toString()}`)
+    bookings.value[cancel_index].status = latestStatus
   }
-
+}
 </script>
 
 <template>
