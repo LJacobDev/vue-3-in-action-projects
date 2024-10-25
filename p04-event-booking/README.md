@@ -10,6 +10,9 @@ Section 7 of the video course explains 'Optimistic UI', where there should be fe
 
 Also, a booking can now only be made once, and if it is attempted to rebook something that has already been registered, it will notify the user that is is already booked and will not continue with the additional registration.
 
+Section 7 continues to show how to use media queries in tailwind css to promote responsive design, breaks the App.vue into smaller subcomponents, and demonstrates how to use the ludice svg icon library to help apply visual indicators that bookings are pending or confirmed.
+
+Section 8 demonstrates the use of composables in order to share state and functions between components, which also eliminates the need to propagate the many event emits throughout the components that were previously needed to carry out an event registration in response to clicking the register button.
 
 ## Project Setup
 

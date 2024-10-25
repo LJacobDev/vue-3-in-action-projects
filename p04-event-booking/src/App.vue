@@ -1,22 +1,17 @@
 <script setup>
+//import components that will be used in the layout
 import EventList from '@/components/EventList.vue'
 import BookingItem from '@/components/BookingItem.vue'
 import LoadingBookingItem from '@/components/LoadingBookingItem.vue'
 
-import { onMounted, ref } from 'vue'
+//import composables that will offer data objects, state and functions
+import useBookings from '@/composables/useBookings.js'
 
-const bookings = ref([])
-const bookingsLoading = ref(false)
+//import onMounted lifecycle hook so that an action can be done as soon as the app is mounted
+import { onMounted } from 'vue'
 
-const fetchBookings = async () => {
-  try {
-    bookingsLoading.value = true
-    const response = await fetch('http://localhost:3001/bookings')
-    bookings.value = await response.json()
-  } finally {
-    bookingsLoading.value = false
-  }
-}
+//retrieve bookings variables and functions from the useBookings composable
+const { bookings, loading, fetchBookings } = useBookings()
 
 onMounted(() => {
   fetchBookings()
@@ -73,7 +68,7 @@ const registerBooking = async (event) => {
 const cancelBooking = async (booking) => {
   const cancel_index = bookings.value.findIndex((b) => b.id === booking.id)
   const bookingToCancel = bookings.value[cancel_index]
-  const latestStatus = bookings.value[cancel_index].status
+  // const latestStatus = bookings.value[cancel_index].status
 
   try {
     //bookings.value[cancel_index].status = 'pending cancellation'
@@ -106,7 +101,7 @@ const cancelBooking = async (booking) => {
     <EventList @register-booking="registerBooking($event)" />
     <h2 class="text-2xl font-medium">Your Bookings</h2>
     <section class="grid grid-cols-1 gap-4">
-      <template v-if="!bookingsLoading">
+      <template v-if="!loading">
         <BookingItem
           v-for="booking in bookings"
           :key="booking.id"

@@ -1,7 +1,7 @@
 <script setup>
 import SectionedCard from '@/components/SectionedCard.vue'
 import RoundButton from '@/components/RoundButton.vue'
-import { LoaderCircle, Check, Loader } from 'lucide-vue-next'
+import { LoaderCircle, Check } from 'lucide-vue-next'
 
 import { computed } from 'vue'
 
