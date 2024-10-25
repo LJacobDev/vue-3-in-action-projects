@@ -4,7 +4,7 @@
 
 import EventCard from '@/components/EventCard.vue'
 import LoadingEventCard from '@/components/LoadingEventCard.vue'
-import SectionedCard from './SectionedCard.vue'
+import ErrorCard from '@/components/ErrorCard.vue'
 import RoundButton from '@/components/RoundButton.vue'
 
 import { ref, onMounted } from 'vue'
@@ -44,12 +44,9 @@ onMounted(() => {
 
 <template>
   <template v-if="error">
-    <SectionedCard>
-      <div class="space-y-4 items-center flex flex-col">
-        <div>Error Loading Events</div>
-        <RoundButton @click="fetchEvents"> Retry </RoundButton>
-      </div>
-    </SectionedCard>
+    <ErrorCard :retry="fetchEvents">
+      Error Loading Events
+    </ErrorCard>
   </template>
   <template v-else>
     <section class="grid md:grid-cols-2 grid-cols-1 gap-8">
