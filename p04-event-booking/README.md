@@ -1,5 +1,7 @@
 # p04-event-booking
 
+![Event Booking App](./public/screenshot.png)
+
 An application made to resemble an event booking process, with the intention of demonstrating various Vue concepts.
 
 Section 5 of the video course uses this to explain components, props, events, fallthrough attributes, slots, named slots, conditional slots, and component variants.
