@@ -89,7 +89,6 @@ const cancelBooking = async (booking) => {
   }
 }
 
-
 export default function useBookings() {
   return {
     bookings,
