@@ -1,41 +1,6 @@
-<template>
-  <template v-if="error">
-    <SectionedCard>
-      <div class="space-y-4 items-center flex flex-col">
-        <div>Error Loading Events</div>
-        <RoundButton @click="fetchEvents"> Retry </RoundButton>
-      </div>
-    </SectionedCard>
-  </template>
-  <template v-else>
-    <section class="grid md:grid-cols-2 grid-cols-1 gap-8">
-      <template v-if="!loading">
-        <template v-if="events.length">
-          <EventCard
-            v-for="event in events"
-            :key="event.id"
-            :title="event.title"
-            :when="event.date"
-            :description="event.description"
-            @register="registerBooking(event)"
-          />
-        </template>
-        <template v-else>
-          <div class="text-center col-span-2">
-            <div>No events found</div>
-            <RoundButton @click="fetchEvents"> Retry </RoundButton>
-          </div>
-        </template>
-      </template>
-      <template v-else>
-        <LoadingEventCard v-for="i in 4" :key="i" />
-      </template>
-    </section>
-  </template>
-</template>
-
 <script setup>
-defineEmits(['registerBooking'])
+// no longer needed once a composable was made for this
+// defineEmits(['registerBooking'])
 
 import EventCard from '@/components/EventCard.vue'
 import LoadingEventCard from '@/components/LoadingEventCard.vue'
@@ -76,3 +41,40 @@ onMounted(() => {
   fetchEvents()
 })
 </script>
+
+<template>
+  <template v-if="error">
+    <SectionedCard>
+      <div class="space-y-4 items-center flex flex-col">
+        <div>Error Loading Events</div>
+        <RoundButton @click="fetchEvents"> Retry </RoundButton>
+      </div>
+    </SectionedCard>
+  </template>
+  <template v-else>
+    <section class="grid md:grid-cols-2 grid-cols-1 gap-8">
+      <template v-if="!loading">
+        <template v-if="events.length">
+          <EventCard
+            v-for="event in events"
+            :key="event.id"
+            :title="event.title"
+            :when="event.date"
+            :description="event.description"
+            @register="registerBooking(event)"
+          />
+        </template>
+        <template v-else>
+          <div class="text-center col-span-2">
+            <div>No events found</div>
+            <RoundButton @click="fetchEvents"> Retry </RoundButton>
+          </div>
+        </template>
+      </template>
+      <template v-else>
+        <LoadingEventCard v-for="i in 4" :key="i" />
+      </template>
+    </section>
+  </template>
+</template>
+
