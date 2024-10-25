@@ -14,6 +14,11 @@ Section 7 continues to show how to use media queries in tailwind css to promote 
 
 Section 8 demonstrates the use of composables in order to share state and functions between components, which also eliminates the need to propagate the many event emits throughout the components that were previously needed to carry out an event registration in response to clicking the register button.
 
+An ErrorCard reusable component is made in order to give the BookingsList component the ability to show a message if something goes wrong with fetching bookings just like EventList does, and changes the retry button to be given a prop that defines a function to run depending on which context the retry button appears.  Now the user has more feedback about if something has gone wrong, and has ways to recover from it.
+
+
+To run this, have both Vite dev server and json-server running.  Access the port that Vite is running on with your web browser, and the Vue application will communicate with json-server for event and bookings storage and retrieval.
+
 ## Project Setup
 
 ```sh
@@ -26,7 +31,7 @@ npm install
 npm run dev
 ```
 
-### Run json-server for a mock API
+### Run json-server for a mock back end API that stores event and booking data
 
 ```sh
 npm run server

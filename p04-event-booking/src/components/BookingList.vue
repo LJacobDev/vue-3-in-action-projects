@@ -4,7 +4,7 @@ import LoadingBookingItem from '@/components/LoadingBookingItem.vue'
 
 //retrieve bookings variables and functions from the useBookings composable
 import useBookings from '@/composables/useBookings'
-const { bookings, loading, bookingError, fetchBookings, cancelBooking } = useBookings()
+const { bookings, loading, error, fetchBookings, cancelBooking } = useBookings()
 
 //import onMounted lifecycle hook so that an action can be done as soon as the app is mounted
 import { onMounted } from 'vue'
@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section v-if="bookingError">
+  <section v-if="error">
     <ErrorCard :retry="fetchBookings"> Could not load bookings </ErrorCard>
   </section>
   <section v-else class="grid grid-cols-1 gap-4">
