@@ -9,7 +9,7 @@
   </template>
   <template v-else>
     <section class="grid md:grid-cols-2 grid-cols-1 gap-8">
-      <template v-if="!eventsLoading">
+      <template v-if="!loading">
         <template v-if="events.length">
           <EventCard
             v-for="event in events"
@@ -17,7 +17,7 @@
             :title="event.title"
             :when="event.date"
             :description="event.description"
-            @register="$emit('registerBooking', event)"
+            @register="registerBooking(event)"
           />
         </template>
         <template v-else>
@@ -39,20 +39,24 @@ defineEmits(['registerBooking'])
 
 import EventCard from '@/components/EventCard.vue'
 import LoadingEventCard from '@/components/LoadingEventCard.vue'
+import SectionedCard from './SectionedCard.vue'
 import RoundButton from '@/components/RoundButton.vue'
 
 import { ref, onMounted } from 'vue'
-import SectionedCard from './SectionedCard.vue'
+
+import useBookings from '@/composables/useBookings.js'
+
+const { registerBooking } = useBookings()
 
 const events = ref([])
-const eventsLoading = ref(false)
+const loading = ref(false)
 const error = ref(null)
 
 const fetchEvents = async () => {
   try {
     // console.log('fetching events')
     error.value = null
-    eventsLoading.value = true
+    loading.value = true
 
     //trying to generate an error by disabling json-server was not causing an error,
     //but rather it caused this code to hang awaiting a response, so it was stuck in loading state
@@ -64,7 +68,7 @@ const fetchEvents = async () => {
     // console.log('error found')
     error.value = e
   } finally {
-    eventsLoading.value = false
+    loading.value = false
   }
 }
 
