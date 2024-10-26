@@ -1,0 +1,1 @@
+<template>Bookings List</template>
