@@ -1,1 +1,3 @@
-<template>Footer</template>
+<template>
+  <div>Footer</div>
+</template>

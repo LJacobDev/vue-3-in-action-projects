@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import EventCard from '@/components/EventCard.vue'
+import RoundedButton from '@/components/RoundedButton.vue'
+import RoundedCard from './RoundedCard.vue'
 
 const events = ref([])
 const eventsUrl = 'http://localhost:3001/events'
@@ -23,27 +26,16 @@ const fetchEvents = async url => {
 
 <template>
   <template v-if="error">
-    <div>Failed to load events: {{ error }}</div>
-    <div>Please try again</div>
-    <!-- add a retry button here once a generic styled button 'RoundedButton' component has been made -->
+    <RoundedCard class="bg-white flex items-center justify-around">
+      <div class="text-xl">Failed to load events: {{ error }}</div>
+      <RoundedButton @click="fetchEvents(eventsUrl)"> Retry </RoundedButton>
+    </RoundedCard>
   </template>
   <template v-else>
-    <div v-for="event in events" :key="event.id">
-      <div>
-        <h3 class="text-2xl">{{ event.eventName }}</h3>
+    <section class="grid grid-cols-2 gap-8">
+      <div v-for="event in events" :key="event.id">
+        <EventCard :event="event" />
       </div>
-      <div>
-        <h3 class="text-2xl">{{ event.when }}</h3>
-      </div>
-      <div>
-        <h3 class="text-xl">{{ event.description }}</h3>
-      </div>
-      <div>
-        <h3 class="text-2xl">{{ event.location }}</h3>
-      </div>
-      <button class="px-4 py-2 rounded-lg w-30 h-12 bg-green-200 font-thin">
-        Register
-      </button>
-    </div>
+    </section>
   </template>
 </template>
