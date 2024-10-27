@@ -32,9 +32,9 @@ const fetchEvents = async url => {
     </RoundedCard>
   </template>
   <template v-else>
-    <section class="grid grid-cols-2 gap-8">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div v-for="event in events" :key="event.id">
-        <EventCard :event="event" />
+        <EventCard class="h-full" :event="event" />
       </div>
     </section>
   </template>
