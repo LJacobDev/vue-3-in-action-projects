@@ -18,14 +18,14 @@ defineProps({
     <template #time>
       <h3 class="text-2xl">{{ event.when }}</h3>
     </template>
-    <div>
+    <template #default>
       <div class="p-4 flex justify-between items-center">
         <h3 class="text-2xl mx-auto">{{ event.location }}</h3>
         <RoundedButton class="mr-6" @click="console.log('clicked register')">
           Register
         </RoundedButton>
       </div>
-    </div>
+    </template>
     <template #footer>
       <h3 class="text-xl text-left">{{ event.description }}</h3>
     </template>

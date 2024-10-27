@@ -9,3 +9,9 @@ defineEmits(['click'])
     <slot />
   </button>
 </template>
+
+<style scoped>
+button {
+  @apply shadow-[4px_4px_8px_rgba(50,50,50,0.8)];
+}
+</style>
