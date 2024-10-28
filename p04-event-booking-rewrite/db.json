@@ -29,5 +29,24 @@
       "location": "Upsideton Rec Center"
     }
   ],
-  "bookings": []
+  "bookings": [
+    {
+      "id": 1730078866603,
+      "eventId": 3,
+      "eventName": "Food Day",
+      "status": "confirmed"
+    },
+    {
+      "id": 1730078911622,
+      "eventId": 3,
+      "eventName": "Food Day",
+      "status": "confirmed"
+    },
+    {
+      "id": 1730079172067,
+      "eventId": 4,
+      "eventName": "Water Party",
+      "status": "confirmed"
+    }
+  ]
 }

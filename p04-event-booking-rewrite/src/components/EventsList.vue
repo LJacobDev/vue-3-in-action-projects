@@ -6,6 +6,7 @@ import RoundedCard from './RoundedCard.vue'
 
 const events = ref([])
 const eventsUrl = 'http://localhost:3001/events'
+const loading = ref(false)
 const error = ref(null)
 
 //connect to ds.json with fetch statement and retrieve evengs, assigning them into events.value for rendering
@@ -16,10 +17,13 @@ onMounted(() => {
 const fetchEvents = async url => {
   try {
     error.value = null
+    loading.value = true
     const response = await fetch(url)
     events.value = await response.json()
   } catch (e) {
     error.value = e
+  } finally {
+    loading.value = false
   }
 }
 </script>
