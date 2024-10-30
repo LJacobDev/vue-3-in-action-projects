@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted } from 'vue'
+
 import useBookings from '@/composables/useBookings'
-import RoundedButton from '@/components/RoundedButton.vue'
-import SectionedCard from '@/components/SectionedCard.vue'
 const { bookings, fetchBookings, deleteBooking } = useBookings()
+
+import SectionedCard from '@/components/SectionedCard.vue'
+import RoundedButton from '@/components/RoundedButton.vue'
 
 onMounted(() => {
   fetchBookings()
