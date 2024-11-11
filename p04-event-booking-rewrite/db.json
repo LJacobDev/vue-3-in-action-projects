@@ -1,0 +1,52 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "eventName": "Baseball Slammer Jammer",
+      "when": "June 25 2025",
+      "description": "Come out to summer's biggest Slammer Jammer, with more Baseball than you'll ever need!",
+      "location": "The Park"
+    },
+    {
+      "id": 2,
+      "eventName": "Horse Chase",
+      "when": "May 20 2025",
+      "description": "A horse will be able to chase you, but you will have lots of hiding spots.  None of the hiding spots are enough to fully keep the horse from getting you, so you'll also need to be able to run to other ones while the horse continues to chase you.",
+      "location": "Planker Field"
+    },
+    {
+      "id": 3,
+      "eventName": "Food Day",
+      "when": "July 10 2025",
+      "description": "Many kinds of food will be on display for you to take a look at.  Feel free to bring and show off something you made as well.",
+      "location": "Hurgen's"
+    },
+    {
+      "id": 4,
+      "eventName": "Water Party",
+      "when": "Aug 3 2025",
+      "description": "Everyone will gather and bring water with them for the biggest experience of your life.",
+      "location": "Upsideton Rec Center"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1730079390767,
+      "eventId": 2,
+      "eventName": "Horse Chase",
+      "status": "confirmed"
+    },
+    {
+      "id": 1730079391025,
+      "eventId": 2,
+      "eventName": "Horse Chase",
+      "status": "confirmed"
+    },
+    {
+      "id": 1730079396161,
+      "eventId": 3,
+      "eventName": "Food Day",
+      "status": "confirmed"
+    }
+  ]
+}
