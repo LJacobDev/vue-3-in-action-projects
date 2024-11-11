@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Tab } from '@/types';
+import type { Tab, TabKey } from '@/types';
 
 
 //define props for what the current active tab is by name, and give it a tab type which will have a name for what this tab is called, and what this tab should display in the UI
 defineProps<{
-    currentTab: string;
+    currentTab: TabKey;
     tab: Tab
 }>();
 
@@ -16,5 +16,5 @@ defineEmits<{
 </script>
 
 <template>
-    Link
+    {{tab.display}}
 </template>

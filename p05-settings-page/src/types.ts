@@ -1,4 +1,6 @@
+export type TabKey = 'General' | 'Notifications' | 'Privacy';
+
 export interface Tab {
-    key: string;
+    key: TabKey;
     display: string;
 }
