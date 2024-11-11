@@ -73,7 +73,7 @@ const registerBooking = async (event) => {
 const cancelBooking = async (booking) => {
   const cancel_index = bookings.value.findIndex((b) => b.id === booking.id)
   const bookingToCancel = bookings.value[cancel_index]
-  const latestStatus = bookings.value[cancel_index].status
+  // const latestStatus = bookings.value[cancel_index].status
 
   try {
     //bookings.value[cancel_index].status = 'pending cancellation'

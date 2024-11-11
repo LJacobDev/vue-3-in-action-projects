@@ -30,9 +30,11 @@
     <body>
         <div id="app">
             <div>Message: {{message}}</div>
-            <div>Age: {{age}}</div>
+            <!-- <div>Age: {{age}}</div> -->
+             <input v-model="age" placeholder="enter age">
             <div>
                 Can You Drive?:
+                <!-- it does not accept double quotes in the following line around 'Yes' and 'No', requires single quotes -->
                 <span
                     :class="{can: canDrive === 'Yes', cant: canDrive === 'No'}"
                     >{{canDrive}}</span
@@ -72,7 +74,7 @@
                         // you don't directly reassign the message itself or the UI won't update.
                         // message = "hi";
                         // You are supposed to change message.value to see it react in UI
-                        message.value = "hi";
+                        message.value = "setTimeout changed age as example, but please enter real age";
 
                         age.value = 18;
                     }, 2000);
