@@ -42,7 +42,7 @@ const tabs: Tab[] = [
         </li>
       </ul>
     </nav>
-    <FadeTransition name="fade" mode="out-in">
+    <FadeTransition>
         <component :is="currentTabComponent" />
     </FadeTransition>
   </main>
