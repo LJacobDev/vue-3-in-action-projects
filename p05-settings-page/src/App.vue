@@ -41,6 +41,21 @@ const tabs: Tab[] = [
         </li>
       </ul>
     </nav>
-    <component :is="currentTabComponent" />
+    <Transition mode="out-in">
+        <component :is="currentTabComponent" />
+    </Transition>
   </main>
 </template>
+
+
+<style scoped>
+
+    .v-enter-active, .v-leave-active {
+        transition: opacity .2s;
+    }
+
+    .v-enter-from, .v-leave-to {
+        opacity: 0;
+    }
+
+</style>
