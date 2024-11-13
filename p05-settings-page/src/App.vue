@@ -34,7 +34,7 @@ const tabs: Tab[] = [
 
 <template>
   <main class="max-w-2xl mx-auto px-4">
-    Settings Page
+    <h1 class="text-2xl">Settings Page</h1>
     <nav class="font-medium text-center text-gray-500 border-b border-gray-200 mb-4">
       <ul class="flex flex-wrap -mb-px">
         <li v-for="tab in tabs" :key="tab.key">
