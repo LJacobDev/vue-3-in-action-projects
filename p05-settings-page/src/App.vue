@@ -5,6 +5,7 @@ import { ref, computed } from 'vue';
 import GeneralSettings from './components/GeneralSettings.vue';
 import PrivacySettings from './components/PrivacySettings.vue';
 import NotificationSettings from './components/NotificationSettings.vue';
+import FadeTransition from '@/components/FadeTransition.vue';
 
 const currentTab = ref<TabKey>('General');
 
@@ -41,21 +42,9 @@ const tabs: Tab[] = [
         </li>
       </ul>
     </nav>
-    <Transition name="fade" mode="out-in">
+    <FadeTransition name="fade" mode="out-in">
         <component :is="currentTabComponent" />
-    </Transition>
+    </FadeTransition>
   </main>
 </template>
 
-
-<style scoped>
-
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .2s;
-    }
-
-    .fade-enter-from, .fade-leave-to {
-        opacity: 0;
-    }
-
-</style>
