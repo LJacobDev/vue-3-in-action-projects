@@ -43,7 +43,10 @@ const tabs: Tab[] = [
       </ul>
     </nav>
     <FadeTransition>
+      <!-- Thie KeepAlive is currently not needed, because the state that the component uses is handled in a composable rather than in the component itself, however it is placed here because it was part of a lesson about various built-in components like KeepAlive and what they are used for  -->
+      <KeepAlive>
         <component :is="currentTabComponent" />
+      </KeepAlive>
     </FadeTransition>
   </main>
 </template>
