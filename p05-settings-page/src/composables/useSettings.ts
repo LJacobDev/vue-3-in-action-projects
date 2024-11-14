@@ -19,5 +19,5 @@ const general = ref<GeneralSettings>({
 });
 
 export function useSettings() {
-  return {general};
+  return { general };
 }

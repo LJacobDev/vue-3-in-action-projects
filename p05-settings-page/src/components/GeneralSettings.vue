@@ -17,12 +17,18 @@
         </div>
         <div>
           <label>Gender</label>
-          <input type="radio" name="gender" id="male" value="male" v-model="general.gender" />
-          <label for="male">Male</label>
-          <input type="radio" name="gender" id="female" value="female" v-model="general.gender" />
-          <label for="female">Female</label>
-          <input type="radio" name="gender" id="other" value="other" v-model="general.gender" />
-          <label for="other">Other / Prefer Not To Say</label>
+          <div class="flex">
+            <input type="radio" name="gender" id="male" value="male" v-model="general.gender" />
+            <label for="male">Male</label>
+          </div>
+          <div class="flex">
+            <input type="radio" name="gender" id="female" value="female" v-model="general.gender" />
+            <label for="female">Female</label>
+          </div>
+          <div class="flex">
+            <input type="radio" name="gender" id="other" value="other" v-model="general.gender" />
+            <label for="other">Other / Prefer Not To Say</label>
+          </div>
         </div>
         <div>
           <label>Country</label>
