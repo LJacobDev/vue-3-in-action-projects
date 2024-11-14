@@ -39,7 +39,7 @@
             <option>USA</option>
           </select>
         </div>
-        <button class="btn-primary">Save</button>
+        <button @click.prevent class="btn-primary">Save</button>
       </form>
     </div>
   </div>
