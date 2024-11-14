@@ -1,5 +1,3 @@
-import GeneralSettings from '@/components/GeneralSettings.vue';
-
 interface GeneralSettings {
   name: string;
   email: string;
