@@ -28,9 +28,21 @@ const privacy = ref<PrivacySettings>({
   searchEngineIndexing: false,
 });
 
+
+interface NotificationsSettings {
+  email: boolean;
+  sms: boolean;
+}
+
+const notifications = ref<NotificationsSettings>({
+  email: false,
+  sms: false,
+})
+
 export function useSettings() {
   return {
     general,
     privacy,
+    notifications,
   };
 }
