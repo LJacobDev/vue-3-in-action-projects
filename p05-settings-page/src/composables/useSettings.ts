@@ -16,6 +16,21 @@ const general = ref<GeneralSettings>({
   country: 'Canada',
 });
 
+type Visibility = 'public' | 'private';
+
+interface PrivacySettings {
+  visibility: Visibility;
+  searchEngineIndexing: boolean;
+}
+
+const privacy = ref<PrivacySettings>({
+  visibility: 'private',
+  searchEngineIndexing: false,
+});
+
 export function useSettings() {
-  return { general };
+  return {
+    general,
+    privacy,
+  };
 }

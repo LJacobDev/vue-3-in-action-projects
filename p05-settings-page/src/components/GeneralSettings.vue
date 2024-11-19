@@ -1,8 +1,7 @@
 <template>
   <div>
     <h2 class="text-xl mb-4">General Settings</h2>
-    <div>
-      <form class="space-y-4">
+    <form class="space-y-4">
         <div>
           <label>Name</label>
           <input type="text" v-model="general.name" />
@@ -41,8 +40,8 @@
         </div>
         <button @click.prevent class="btn-primary">Save</button>
       </form>
-    </div>
-  </div>
+
+</div>
 </template>
 
 <script setup lang="ts">
