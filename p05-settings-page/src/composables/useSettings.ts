@@ -9,11 +9,20 @@ interface GeneralSettings {
 import { ref } from 'vue';
 
 
-const initSettings = <T>(key: string, defaults: T) => {
-  const storage = localStorage.getItem(key);
+interface SettingsMap {
+  general: GeneralSettings;
+  privacy: PrivacySettings;
+  notifications: NotificationsSettings;
+}
 
-  return storage !== null
-    ? JSON.parse(storage)
+type SettingsKey = keyof SettingsMap;
+
+
+const initSettings = <T extends SettingsKey>(key: T, defaults: SettingsMap[T]) => {
+  const storedSettings = localStorage.getItem(key);
+
+  return storedSettings !== null
+    ? JSON.parse(storedSettings)
     : defaults
 
 }
