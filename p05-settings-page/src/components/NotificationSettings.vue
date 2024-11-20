@@ -10,7 +10,7 @@
         <input type="checkbox" id="sms" v-model="notifications.sms"/>
         <label for="sms">SMS</label>
       </div>
-      <button @click.prevent class="btn-primary">Save</button>
+      <button @click.prevent="saveSettings" class="btn-primary">Save</button>
     </form>
   </div>
 </template>
@@ -18,5 +18,5 @@
 <script setup lang="ts">
 import { useSettings } from '@/composables/useSettings';
 
-const { notifications } = useSettings();
+const { notifications, saveSettings } = useSettings();
 </script>

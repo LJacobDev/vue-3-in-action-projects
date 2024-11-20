@@ -8,13 +8,19 @@ interface GeneralSettings {
 
 import { ref } from 'vue';
 
-const general = ref<GeneralSettings>({
-  name: '',
-  email: '',
-  about: '',
-  gender: 'male',
-  country: 'Canada',
-});
+const general = ref<GeneralSettings>((() => {
+  const storage = localStorage.getItem('general');
+
+  return storage ? JSON.parse(storage) : {
+    name: '',
+    email: '',
+    about: '',
+    gender: 'male',
+    country: 'Canada',
+  }
+
+})());
+
 
 type Visibility = 'public' | 'private';
 
@@ -39,10 +45,17 @@ const notifications = ref<NotificationsSettings>({
   sms: false,
 })
 
+const saveSettings = () => {
+  localStorage.setItem('general', JSON.stringify(general.value));
+  localStorage.setItem('privacy', JSON.stringify(privacy.value));
+  localStorage.setItem('notifications', JSON.stringify(notifications.value));
+}
+
 export function useSettings() {
   return {
     general,
     privacy,
     notifications,
+    saveSettings,
   };
 }

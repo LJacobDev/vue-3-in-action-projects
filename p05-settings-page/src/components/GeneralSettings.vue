@@ -38,7 +38,7 @@
             <option>USA</option>
           </select>
         </div>
-        <button @click.prevent class="btn-primary">Save</button>
+        <button @click.prevent="saveSettings" class="btn-primary">Save</button>
       </form>
 
 </div>
@@ -47,5 +47,5 @@
 <script setup lang="ts">
 import { useSettings } from '@/composables/useSettings';
 
-const { general } = useSettings();
+const { general, saveSettings } = useSettings();
 </script>
