@@ -28,7 +28,7 @@ const initSettings = <T extends SettingsKey>(key: T, defaults: SettingsMap[T]) =
 }
 
 const general = ref<GeneralSettings>(
-  initSettings<GeneralSettings>('general', {
+  initSettings<SettingsKey>('general', {
     name: '',
     email: '',
     about: '',
@@ -45,7 +45,7 @@ interface PrivacySettings {
 }
 
 const privacy = ref<PrivacySettings>(
-  initSettings<PrivacySettings>('privacy', {
+  initSettings<SettingsKey>('privacy', {
     visibility: 'private',
     searchEngineIndexing: false,
   })
@@ -58,7 +58,7 @@ interface NotificationsSettings {
 }
 
 const notifications = ref<NotificationsSettings>(
-  initSettings<NotificationsSettings>('notifications', {
+  initSettings<SettingsKey>('notifications', {
     email: false,
     sms: false,
   })
