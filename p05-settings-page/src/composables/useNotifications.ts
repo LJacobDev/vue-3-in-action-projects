@@ -14,7 +14,7 @@ function addNotification(message: string) {
   };
   notifications.value.push(notification);
 
-  setTimeout(() => removeNotification(notification.id), 3000);
+  setTimeout(() => removeNotification(notification.id), 1000);
 }
 
 function removeNotification(id: number) {
