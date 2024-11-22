@@ -27,6 +27,6 @@ const { notifications, removeNotification } = useNotifications();
 }
 
 .v-leave-active {
-  transition: opacity 2.5s ease-in;
+  transition: opacity .5s ease-in;
 }
 </style>

@@ -14,7 +14,7 @@ const addNotification = (message: string) => {
   };
   notifications.value.push(notification);
 
-  setTimeout(() => removeNotification(notification.id), 1000);
+  setTimeout(() => removeNotification(notification.id), 8000);
 };
 
 const removeNotification = (id: number) => {
