@@ -1,19 +1,24 @@
 <template>
-  <ul>
-    <li>
+  <Teleport to="body">
+    <ul class="notification-list">
       <TransitionGroup>
-        <div v-for="notification in notifications" :key="notification.id">
-          <div>{{ notification.message }}</div>
-        </div>
+        <li class="notification-item" v-for="notification in notifications" :key="notification.id">
+          <div>
+            <div>{{ notification.message }}</div>
+          </div>
+          <button class="notification-ack-button" @click="removeNotification(notification.id)">
+            OK
+          </button>
+        </li>
       </TransitionGroup>
-    </li>
-  </ul>
+    </ul>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
 import useNotifications from '@/composables/useNotifications';
 
-const { notifications } = useNotifications();
+const { notifications, removeNotification } = useNotifications();
 </script>
 
 <style scoped>

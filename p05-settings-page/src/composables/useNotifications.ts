@@ -3,11 +3,11 @@ interface Notification {
   message: string;
 }
 
-import {ref} from 'vue'
+import { ref } from 'vue';
 
 const notifications = ref<Notification[]>([]);
 
-function addNotification(message: string) {
+const addNotification = (message: string) => {
   const notification = {
     id: Date.now(),
     message: message,
@@ -15,11 +15,11 @@ function addNotification(message: string) {
   notifications.value.push(notification);
 
   setTimeout(() => removeNotification(notification.id), 1000);
-}
+};
 
-function removeNotification(id: number) {
-  notifications.value = notifications.value.filter((notification) => notification.id !== id)
-}
+const removeNotification = (id: number) => {
+  notifications.value = notifications.value.filter((notification) => notification.id !== id);
+};
 
 export default function useNotifications() {
   return {
