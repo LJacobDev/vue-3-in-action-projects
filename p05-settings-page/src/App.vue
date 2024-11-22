@@ -2,10 +2,11 @@
 import TabLink from '@/components/TabLink.vue';
 import type { Tab, TabKey } from '@/types';
 import { ref, computed } from 'vue';
-import GeneralSettings from './components/GeneralSettings.vue';
-import PrivacySettings from './components/PrivacySettings.vue';
+import GeneralSettings from '@/components/GeneralSettings.vue';
+import PrivacySettings from '@/components/PrivacySettings.vue';
 import NotificationSettings from './components/NotificationSettings.vue';
 import FadeTransition from '@/components/FadeTransition.vue';
+import NotificationList from '@/components/NotificationList.vue';
 
 const currentTab = ref<TabKey>('General');
 
@@ -48,6 +49,7 @@ const tabs: Tab[] = [
         <component :is="currentTabComponent" />
       </KeepAlive>
     </FadeTransition>
+    <NotificationList/>
   </main>
 </template>
 

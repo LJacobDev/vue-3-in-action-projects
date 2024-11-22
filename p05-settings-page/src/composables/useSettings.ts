@@ -7,6 +7,7 @@ interface GeneralSettings {
 }
 
 import { ref } from 'vue';
+import useNotifications from './useNotifications';
 
 
 interface SettingsMap {
@@ -64,10 +65,15 @@ const notifications = ref<NotificationsSettings>(
   })
 )
 
+const { addNotification } = useNotifications();
+
 const saveSettings = () => {
   localStorage.setItem('general', JSON.stringify(general.value));
   localStorage.setItem('privacy', JSON.stringify(privacy.value));
   localStorage.setItem('notifications', JSON.stringify(notifications.value));
+
+  addNotification("Settings Saved!");
+
 }
 
 export function useSettings() {
