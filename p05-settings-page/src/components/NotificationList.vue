@@ -1,9 +1,9 @@
 <template>
   <ul>
     <li>
-      <div v-for="notification in notifications" :key="notification.id">
-        <div>Notification Message Popup</div>
-      </div>
+        <div v-for="notification in notifications" :key="notification.id">
+          <div>{{notification.message}}</div>
+        </div>
     </li>
   </ul>
 </template>

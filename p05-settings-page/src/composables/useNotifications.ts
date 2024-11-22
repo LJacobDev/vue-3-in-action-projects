@@ -3,20 +3,22 @@ interface Notification {
   message: string;
 }
 
-let notifications: Notification[] = [];
+import {ref} from 'vue'
+
+const notifications = ref<Notification[]>([]);
 
 function addNotification(message: string) {
   const notification = {
     id: Date.now(),
     message: message,
   };
-  notifications.push(notification);
+  notifications.value.push(notification);
 
-  setTimeout(() => removeNotification(notification.id), 5000);
+  setTimeout(() => removeNotification(notification.id), 3000);
 }
 
 function removeNotification(id: number) {
-  notifications = notifications.filter((notification) => notification.id !== id)
+  notifications.value = notifications.value.filter((notification) => notification.id !== id)
 }
 
 export default function useNotifications() {

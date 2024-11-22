@@ -72,7 +72,7 @@ const saveSettings = () => {
   localStorage.setItem('privacy', JSON.stringify(privacy.value));
   localStorage.setItem('notifications', JSON.stringify(notifications.value));
 
-  addNotification("Settings Saved!");
+  addNotification("Settings Saved");
 
 }
 
